@@ -5,17 +5,19 @@ import Lenis from "lenis";
 
 export default function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
       autoRaf: true,
-      smoothWheel: true,
+      smoothWheel: !isMobile,
       syncTouch: false,
-      wheelMultiplier: 0.9,
+      duration: isMobile ? 0.8 : 0.85,
+      wheelMultiplier: isMobile ? 1 : 1.15,
       touchMultiplier: 1,
-      duration: 1.05,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       anchors: {
         offset: 90,
-        duration: 1.05,
+        duration: 0.85,
       },
       stopInertiaOnNavigate: true,
     });

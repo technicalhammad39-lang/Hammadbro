@@ -22,7 +22,11 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
+.lenis.lenis-smooth [data-lenis-prevent],
+.lenis.lenis-smooth [data-lenis-prevent-wheel],
+.lenis.lenis-smooth [data-lenis-prevent-touch],
+.lenis.lenis-smooth [data-lenis-prevent-vertical],
+.lenis.lenis-smooth [data-lenis-prevent-horizontal] {
   overscroll-behavior: contain;
 }
 
@@ -206,6 +210,7 @@ select {
 
 .marquee {
     animation: scroll-left 30s linear infinite;
+    will-change: transform;
 }
 
 @keyframes scroll-left {
@@ -436,6 +441,7 @@ select {
     radial-gradient(circle at 78% 70%, rgba(255, 255, 255, 0.1), transparent 24%),
     linear-gradient(120deg, rgba(253, 133, 58, 0.08), transparent 42%, rgba(253, 133, 58, 0.12));
   animation: dark-hero-glow 9s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
 .hide-scrollbar {

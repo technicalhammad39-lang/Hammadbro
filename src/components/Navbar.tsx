@@ -18,10 +18,22 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(true);
     const lastScrollY = useRef(0);
+    const isNavVisibleRef = useRef(true);
+    const ticking = useRef(false);
+    const frame = useRef<number | null>(null);
     const scrollStopTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         lastScrollY.current = window.scrollY;
+
+        const updateNavVisibility = (visible: boolean) => {
+            if (isNavVisibleRef.current === visible) {
+                return;
+            }
+
+            isNavVisibleRef.current = visible;
+            setIsNavVisible(visible);
+        };
 
         const showAfterScrollStops = () => {
             if (scrollStopTimer.current) {
@@ -29,41 +41,41 @@ const Navbar = () => {
             }
 
             scrollStopTimer.current = setTimeout(() => {
-                setIsNavVisible(true);
+                updateNavVisibility(true);
             }, 180);
         };
 
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-
-            if (currentScrollY <= 12 || currentScrollY < lastScrollY.current - 2) {
-                setIsNavVisible(true);
-            } else if (currentScrollY > lastScrollY.current + 2) {
-                setIsNavVisible(false);
-                setIsMobileMenuOpen(false);
+            if (ticking.current) {
+                return;
             }
 
-            lastScrollY.current = currentScrollY;
-            showAfterScrollStops();
-        };
+            ticking.current = true;
 
-        const handleWheel = (event: WheelEvent) => {
-            if (event.deltaY > 0) {
-                setIsNavVisible(false);
-                setIsMobileMenuOpen(false);
-            } else if (event.deltaY < 0) {
-                setIsNavVisible(true);
-            }
+            frame.current = requestAnimationFrame(() => {
+                const currentScrollY = window.scrollY;
 
-            showAfterScrollStops();
+                if (currentScrollY <= 12 || currentScrollY < lastScrollY.current - 4) {
+                    updateNavVisibility(true);
+                } else if (currentScrollY > lastScrollY.current + 6) {
+                    updateNavVisibility(false);
+                    setIsMobileMenuOpen((open) => (open ? false : open));
+                }
+
+                lastScrollY.current = currentScrollY;
+                ticking.current = false;
+                frame.current = null;
+                showAfterScrollStops();
+            });
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('wheel', handleWheel, { passive: true });
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('wheel', handleWheel);
+            if (frame.current) {
+                cancelAnimationFrame(frame.current);
+            }
             if (scrollStopTimer.current) {
                 clearTimeout(scrollStopTimer.current);
             }

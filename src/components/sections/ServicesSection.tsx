@@ -42,9 +42,9 @@ export default function ServicesSection() {
 
   if (loading) {
     return (
-      <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid w-full place-items-center gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="h-[236px] animate-pulse rounded-[24px] bg-white/10" />
+          <div key={index} className="h-[350px] w-[82vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[310px] sm:w-full sm:max-w-[300px] lg:h-[285px] lg:max-w-[270px] xl:h-[270px] xl:max-w-[255px]" />
         ))}
       </div>
     );

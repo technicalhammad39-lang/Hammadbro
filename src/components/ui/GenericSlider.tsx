@@ -52,7 +52,6 @@ export function GenericSlider<T extends AllowedCard>({
       <div
         className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
         data-lenis-prevent-touch
-        data-lenis-prevent-wheel
       >
         <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
           <div className="flex gap-4 overflow-hidden">
@@ -108,7 +107,6 @@ export function GenericSlider<T extends AllowedCard>({
     <div
       className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
       data-lenis-prevent-touch
-      data-lenis-prevent-wheel
     >
       <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
         <Swiper
@@ -146,7 +144,7 @@ export function GenericSlider<T extends AllowedCard>({
               spaceBetween: cardType === 'hover' ? 18 : 24,
             },
           }}
-          className={cardType === 'hover' ? '!pb-10' : '!pb-12 sm:!pb-16'}
+          className={cardType === 'hover' ? '!pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
         >
           {data.map((item, index) => (
             <SwiperSlide

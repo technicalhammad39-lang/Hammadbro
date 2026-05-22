@@ -3,7 +3,7 @@ import CustomeText from "@/components/ui/CustomeText";
 import DualToggleButtons from "@/components/ui/DualButtons";
 import Image from "next/image";
 import Link from "next/link";
-import { BadgeCheck, Clock, Lightbulb, MessageCircle, Printer, RefreshCcw, Star, Users } from "lucide-react";
+import { Star } from "lucide-react";
 import { iconAndText, skills, reviews } from '../data/data';
 import { GenericSlider } from "@/components/ui/GenericSlider";
 import ClientOnly from "@/components/ui/ClientOnly";
@@ -111,23 +111,6 @@ const heroSocialLinks = [
       </svg>
     ),
   },
-];
-
-const hireHighlights = [
-  { title: "Fast Delivery", icon: Clock },
-  { title: "Print Ready Designs", icon: Printer },
-  { title: "Brand Identity Expertise", icon: BadgeCheck },
-  { title: "Unlimited Revisions", icon: RefreshCcw },
-  { title: "Creative Problem Solving", icon: Lightbulb },
-  { title: "Professional Communication", icon: MessageCircle },
-];
-
-const toolBadges = [
-  { name: "Adobe Photoshop", level: 96 },
-  { name: "Illustrator", level: 92 },
-  { name: "CorelDRAW", level: 90 },
-  { name: "Figma", level: 82 },
-  { name: "Canva", level: 88 },
 ];
 
 function HeroSocialLinks({ className = "" }: { className?: string }) {
@@ -311,7 +294,7 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section id="services" className="relative flex flex-col w-full min-h-0 gap-6 sm:gap-8 items-center px-5 sm:px-6 lg:px-[71px] py-10 sm:py-12 lg:py-14 bg-[#171717] rounded-[30px] sm:rounded-[50px] overflow-hidden">
+      <section id="services" className="relative flex flex-col w-full min-h-0 gap-5 sm:gap-7 items-center px-5 sm:px-6 lg:px-[71px] py-9 sm:py-11 lg:py-12 bg-[#171717] rounded-[30px] sm:rounded-[50px] overflow-hidden">
         <Image
           src="/Frame 77.svg"
           alt="image"
@@ -319,7 +302,7 @@ export default function Home() {
           className="object-cover absolute opacity-50"
         />
 
-        <Reveal className="w-full flex flex-col lg:flex-row items-start justify-between gap-6 relative z-10">
+        <Reveal className="w-full flex flex-col lg:flex-row items-start justify-between gap-5 relative z-10">
           <div className="flex gap-2.5">
             <CustomeText title="My" className="font-medium text-3xl sm:text-4xl lg:text-5xl text-[#FCFCFD]" />
             <CustomeText title="Services" className="font-medium text-3xl sm:text-4xl lg:text-5xl text-[#FD853A]" />
@@ -367,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* Hire Me */}
-      <section id="about" className="w-full flex flex-col lg:flex-row items-center justify-between px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[88px] bg-[#F2F4F7] rounded-[32px] lg:rounded-[50px] gap-8 lg:gap-[58px]">
+      <section id="about" className="w-full flex flex-col lg:flex-row items-center justify-between px-5 sm:px-6 lg:px-[71px] py-10 sm:py-14 lg:py-20 bg-[#F2F4F7] rounded-[32px] lg:rounded-[50px] gap-7 lg:gap-[58px]">
         <Reveal className="relative w-full max-w-[360px] sm:max-w-[460px] lg:max-w-[500px] aspect-square group mx-auto lg:mx-0">
           <Image
             src="/pic2.webp"
@@ -388,7 +371,7 @@ export default function Home() {
           />
         </Reveal>
 
-        <Reveal className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start gap-6 sm:gap-7" delay={0.08}>
+        <Reveal className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start gap-5 sm:gap-6" delay={0.08}>
           <div className="flex flex-wrap text-[36px] sm:text-5xl lg:text-6xl font-semibold gap-2 leading-tight">
             <CustomeText title="Why" className="text-[#344054]" />
             <CustomeText title="Hire Me" className="text-[#FD853A]" />
@@ -398,20 +381,6 @@ export default function Home() {
           <p className="text-[#667085] text-base sm:text-lg lg:text-xl leading-relaxed max-w-xl">
             I create designs that help businesses look trusted, professional, and ready to sell. From brand identity and social media visuals to print-ready marketing designs, my focus is always on clean communication, strong first impressions, and consistent visual branding.
           </p>
-
-          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-            {hireHighlights.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.title} className="group flex items-center gap-3 rounded-[20px] border border-white bg-white/70 p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#FD853A]/35 hover:shadow-[0_18px_38px_rgba(23,23,23,0.08)]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFEAD5] text-[#FD853A] transition-all duration-300 group-hover:bg-[#FD853A] group-hover:text-white">
-                    <Icon size={19} />
-                  </span>
-                  <span className="text-sm font-semibold text-[#1D2939] sm:text-base">{item.title}</span>
-                </div>
-              );
-            })}
-          </div>
 
           <div className="grid w-full grid-cols-2 gap-2 sm:hidden">
             <div className="rounded-[20px] bg-white p-3 text-center shadow-sm">
@@ -439,26 +408,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="w-full rounded-[24px] bg-white p-4 shadow-sm">
-            <div className="mb-4 flex items-center gap-2 text-[#1D2939]">
-              <Users size={20} className="text-[#FD853A]" />
-              <p className="font-semibold">Tools I Use</p>
-            </div>
-            <div className="grid gap-3">
-              {toolBadges.map((tool) => (
-                <div key={tool.name}>
-                  <div className="mb-1 flex items-center justify-between text-sm font-semibold text-[#344054]">
-                    <span>{tool.name}</span>
-                    <span>{tool.level}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-[#F2F4F7]">
-                    <div className="h-full rounded-full bg-[#FD853A] transition-[width] duration-1000 ease-out" style={{ width: `${tool.level}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="flex w-full flex-col gap-3 sm:flex-row">
             <a href="#contact" className="premium-cta group flex w-full cursor-pointer items-center justify-center gap-2 rounded-[20px] px-6 py-3.5 text-center text-xl font-semibold text-white transition-transform duration-300 active:scale-[0.98] sm:w-auto sm:text-[22px]">
               <span>Hire Me</span>
@@ -472,7 +421,9 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <SkillsSlider />
+      <div className="w-full -mt-3 mb-8 sm:-mt-5 sm:mb-10 lg:mb-12" data-lenis-prevent-touch>
+        <SkillsSlider />
+      </div>
 
       {/* Testimonials */}
       <section className="relative flex flex-col w-full min-h-0 items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[90px] gap-8 sm:gap-12 bg-[#171717] rounded-[30px] sm:rounded-[40px] lg:rounded-[50px] overflow-hidden">
