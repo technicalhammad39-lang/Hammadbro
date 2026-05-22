@@ -44,7 +44,7 @@ export default function ServicesSection() {
     return (
       <div className="grid w-full place-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="h-[355px] w-[86vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[350px] sm:w-full sm:max-w-[340px] lg:h-[360px] lg:max-w-[330px] xl:h-[368px] xl:max-w-[340px]" />
+          <div key={index} className="h-[352px] w-[86vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[356px] sm:w-full sm:max-w-[340px] lg:h-[370px] lg:max-w-[330px] xl:h-[382px] xl:max-w-[340px]" />
         ))}
       </div>
     );
