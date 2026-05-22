@@ -34,47 +34,25 @@ function SkillsSlider() {
   return (
     <div className="relative w-full h-[100px] sm:h-[147px] bg-[#FB6514] rounded-tl-4xl rounded-br-4xl overflow-hidden">
       <div className="absolute top-6 sm:top-8 left-0 w-full h-[52px] sm:h-[63px] bg-white -rotate-2 md:-rotate-[1.9deg] z-10 flex items-center overflow-hidden">
-        <div className="hidden sm:flex marquee gap-8 w-max">
-          {[...skills, ...skills].map((skill, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-5 text-[#000000] text-[48px] whitespace-nowrap"
-            >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 35 35"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
-                  fill="#FD853A"
-                />
-              </svg>
-              {skill}
-            </div>
-          ))}
-        </div>
-        <div className="flex sm:hidden w-full justify-center gap-4 overflow-hidden px-6">
-          {skills.slice(0, 2).map((skill, index) => (
-            <div
-              key={index}
-              className="flex shrink-0 items-center gap-2 text-[#000000] text-[22px] whitespace-nowrap"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 35 35"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
-                  fill="#FD853A"
-                />
-              </svg>
-              {skill}
+        <div className="tools-marquee-track">
+          {Array.from({ length: 3 }).map((_, groupIndex) => (
+            <div key={groupIndex} className="tools-marquee-group">
+              {skills.map((skill) => (
+                <div
+                  key={`${groupIndex}-${skill}`}
+                  className="flex shrink-0 items-center gap-3 whitespace-nowrap text-[28px] text-black sm:gap-5 sm:text-[48px]"
+                >
+                  <Image
+                    src="/Star-4.svg"
+                    alt=""
+                    width={35}
+                    height={35}
+                    className="h-5 w-5 shrink-0 sm:h-7 sm:w-7"
+                    aria-hidden="true"
+                  />
+                  <span>{skill}</span>
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -382,27 +360,27 @@ export default function Home() {
             I create designs that help businesses look trusted, professional, and ready to sell. From brand identity and social media visuals to print-ready marketing designs, my focus is always on clean communication, strong first impressions, and consistent visual branding.
           </p>
 
-          <div className="grid w-full grid-cols-2 gap-2 sm:hidden">
-            <div className="rounded-[20px] bg-white p-3 text-center shadow-sm">
+          <div className="grid w-full grid-cols-2 gap-5 sm:hidden">
+            <div className="text-center">
               <AnimatedCounter value={100} suffix="+" className="stat-number-glow text-[26px] font-semibold text-[#1D2939]" />
               <p className="mt-1 text-[12px] font-medium leading-tight text-[#667085]">Designs Completed</p>
             </div>
-            <div className="rounded-[20px] bg-white p-3 text-center shadow-sm">
+            <div className="text-center">
               <AnimatedCounter value={3} suffix="+" className="stat-number-glow text-[26px] font-semibold text-[#1D2939]" />
               <p className="mt-1 text-[12px] font-medium leading-tight text-[#667085]">Years Experience</p>
             </div>
           </div>
 
-          <div className="hidden w-full grid-cols-1 gap-3 sm:grid sm:grid-cols-3">
-            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+          <div className="hidden w-full grid-cols-1 gap-8 sm:grid sm:grid-cols-3">
+            <div>
               <AnimatedCounter value={500} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
               <p className="mt-1 text-sm font-medium text-[#667085]">Projects Delivered</p>
             </div>
-            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+            <div>
               <AnimatedCounter value={3} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
               <p className="mt-1 text-sm font-medium text-[#667085]">Years Experience</p>
             </div>
-            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+            <div>
               <AnimatedCounter value={100} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
               <p className="mt-1 text-sm font-medium text-[#667085]">Happy Clients</p>
             </div>
