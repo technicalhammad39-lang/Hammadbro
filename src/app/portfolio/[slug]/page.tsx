@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import SourceBackLink from "@/components/ui/SourceBackLink";
 import RichTextContent from "@/components/ui/RichTextContent";
 import { getPortfolioProject, portfolioData } from "@/data/data";
+import { normalizeImageUrl } from "@/lib/image-url";
 import { getProjectBySlug } from "@/lib/public-content";
 
 export const dynamicParams = true;
@@ -102,7 +103,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
           <div className="overflow-hidden rounded-[28px] bg-white/10">
             {project.mainImage ? (
-              <img src={project.mainImage} alt={project.title} className="h-auto w-full" />
+              <img src={normalizeImageUrl(project.mainImage)} alt={project.title} className="h-auto w-full" />
             ) : (
               <div className="flex min-h-[280px] items-center justify-center text-white/60">No project image</div>
             )}
@@ -126,7 +127,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         {galleryImages.length > 0 && (
           <section className="columns-1 gap-6 md:columns-2">
             {galleryImages.map((image) => (
-              <img key={image} src={image} alt={project.title} className="mb-6 h-auto w-full break-inside-avoid rounded-[24px]" />
+              <img key={image} src={normalizeImageUrl(image)} alt={project.title} className="mb-6 h-auto w-full break-inside-avoid rounded-[24px]" />
             ))}
           </section>
         )}

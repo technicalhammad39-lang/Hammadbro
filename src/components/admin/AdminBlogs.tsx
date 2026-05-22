@@ -3,7 +3,7 @@
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AdminButton, AdminCard, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
 import { BlogDoc } from "@/lib/content-types";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
 import { db } from "@/lib/firebase";
@@ -76,7 +76,7 @@ export default function AdminBlogs() {
         {blogs.map((blog) => (
           <AdminCard key={blog.id} className="grid gap-5 lg:grid-cols-[160px_1fr_auto] lg:items-center">
             {blog.featuredImageUrl ? (
-              <img src={blog.featuredImageUrl} alt={blog.title} className="h-auto w-full rounded-[18px]" />
+              <AdminImagePreview src={blog.featuredImageUrl} alt={blog.title} />
             ) : (
               <div className="flex h-28 items-center justify-center rounded-[18px] bg-[#F2F4F7] text-sm text-[#667085]">No image</div>
             )}

@@ -3,7 +3,7 @@
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { AdminButton, AdminCard, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import { BlogDoc } from "@/lib/content-types";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
@@ -86,7 +86,7 @@ export default function BlogForm({ mode }: { mode: "new" | "edit" }) {
     try {
       const url = await uploadAdminFile(file, "blogs");
       updateBlog("featuredImageUrl", url);
-      setMessage("Featured image uploaded.");
+      setMessage("Featured image uploaded. Preview is shown below.");
       setMessageType("success");
     } catch (uploadError) {
       console.error("Blog image upload failed:", uploadError);
@@ -174,7 +174,7 @@ export default function BlogForm({ mode }: { mode: "new" | "edit" }) {
           </Field>
           <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onChange={uploadImage} disabled={uploading || saving} />
           {uploading && <p className="text-sm font-semibold text-[#FD853A]">Uploading featured image...</p>}
-          {blog.featuredImageUrl && <img src={blog.featuredImageUrl} alt="Blog preview" className="h-auto w-full rounded-[20px]" />}
+          {blog.featuredImageUrl && <AdminImagePreview src={blog.featuredImageUrl} alt="Blog preview" />}
         </AdminCard>
 
         <AdminCard className="flex flex-col gap-5">

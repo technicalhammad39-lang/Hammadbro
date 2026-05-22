@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { PortfolioItem } from "@/data/data";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 function fallbackToDoc(project: PortfolioItem, index: number): PortfolioProjectDoc {
   return {
@@ -66,7 +67,7 @@ export default function HomePortfolio({ fallback }: { fallback: PortfolioItem[] 
             >
               <div className="relative">
                 <img
-                  src={project.mainImageUrl}
+                  src={normalizeImageUrl(project.mainImageUrl)}
                   alt={project.title}
                   className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.01]"
                 />

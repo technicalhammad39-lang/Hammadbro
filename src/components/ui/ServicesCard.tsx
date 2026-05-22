@@ -1,4 +1,5 @@
 import { FileText, Monitor, Palette, PenTool, Printer, Share2 } from 'lucide-react';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 const serviceIcons = {
   Palette,
@@ -38,7 +39,7 @@ export default function ServicesCard({ title, desc, icon, imageSrc }: HoverCardP
       <div className="relative z-10 mt-5 flex flex-col gap-4">
         {imageSrc && (
           <div className="overflow-hidden rounded-[22px] bg-white/10">
-            <img src={imageSrc} alt={title} className="h-auto w-full rounded-[22px] object-contain" />
+            <img src={normalizeImageUrl(imageSrc)} alt={title} className="h-auto w-full rounded-[22px] object-contain" />
           </div>
         )}
         <p className="text-[15px] font-medium leading-snug text-white/85 sm:text-base">

@@ -1,9 +1,9 @@
 "use client";
 
-import Image from 'next/image';
 import Link from 'next/link';
 import ArrowButton from './ArrowButton';
 import { PortfolioItem } from '@/data/data';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 interface PortfolioCardProps extends Pick<PortfolioItem, 'image' | 'title' | 'href' | 'desc'> {
   category?: string;
@@ -11,7 +11,7 @@ interface PortfolioCardProps extends Pick<PortfolioItem, 'image' | 'title' | 'hr
   sourceHash?: string;
 }
 
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc, category, priority = false, sourceHash }) => {
+const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc, category, sourceHash }) => {
   const detailHref = sourceHash ? `${href}?from=${encodeURIComponent(sourceHash)}` : href;
 
   const preserveSectionBeforeNavigation = () => {
@@ -35,13 +35,10 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }}
     >
-      <Image
-        src={image}
+      <img
+        src={normalizeImageUrl(image)}
         alt={title}
-        fill
-        priority={priority}
-        sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1280px) 50vw, 633px"
-        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
       />
 
       <div className="absolute inset-0 z-10 bg-black/0 transition-colors duration-500 ease-out md:group-hover:bg-black/55 md:group-focus-visible:bg-black/55" />

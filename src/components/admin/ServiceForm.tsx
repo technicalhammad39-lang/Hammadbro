@@ -3,7 +3,7 @@
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { AdminButton, AdminCard, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import { cardData } from "@/data/data";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
@@ -81,7 +81,7 @@ export default function ServiceForm({ mode }: { mode: "new" | "edit" }) {
       setMessageType("info");
       const url = await uploadAdminFile(file, "services");
       updateService("imageUrl", url);
-      setMessage("Service image uploaded.");
+      setMessage("Service image uploaded. Preview is shown below.");
       setMessageType("success");
     } catch (error) {
       console.error("Service image upload failed:", error);
@@ -194,7 +194,7 @@ export default function ServiceForm({ mode }: { mode: "new" | "edit" }) {
           </Field>
           <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onChange={uploadImage} disabled={uploading || saving} />
           {uploading && <p className="text-sm font-semibold text-[#FD853A]">Uploading service image...</p>}
-          {service.imageUrl && <img src={service.imageUrl} alt="Service preview" className="h-auto w-full rounded-[20px] object-contain" />}
+          {service.imageUrl && <AdminImagePreview src={service.imageUrl} alt="Service preview" />}
         </AdminCard>
 
         <AdminCard className="flex flex-col gap-5">

@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminToken } from "@/lib/firebase-admin";
+import { normalizeUploadBaseUrl } from "@/lib/image-url";
 import { createSlug } from "@/lib/slug";
 
 export const runtime = "nodejs";
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(await file.arrayBuffer());
     await writeFile(targetPath, buffer);
 
-    const url = `${publicBaseUrl.replace(/\/$/, "")}/${folder}/${uniqueName}`;
+    const url = `${normalizeUploadBaseUrl(publicBaseUrl)}/${folder}/${uniqueName}`;
 
     return NextResponse.json({
       ok: true,

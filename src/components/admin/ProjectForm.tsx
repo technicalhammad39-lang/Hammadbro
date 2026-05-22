@@ -3,7 +3,7 @@
 import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { AdminButton, AdminCard, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminToast, Field, inputClass, StatusMessage } from "@/components/admin/AdminUi";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import { portfolioCategories } from "@/data/data";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
@@ -93,12 +93,12 @@ export default function ProjectForm({ mode }: { mode: "new" | "edit" }) {
       if (target === "main") {
         updateProject("mainImageUrl", url);
       } else {
-        const nextImages = [...project.images, url];
+        const nextImages = [...(project.images || []), url];
         updateProject("images", nextImages);
         setGalleryText(nextImages.join("\n"));
       }
 
-      setMessage("Image uploaded successfully.");
+      setMessage("Image uploaded successfully. Preview is shown below.");
       setMessageType("success");
     } catch (uploadError) {
       console.error("Project image upload failed:", uploadError);
@@ -203,7 +203,7 @@ export default function ProjectForm({ mode }: { mode: "new" | "edit" }) {
           </Field>
           <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onChange={(event) => uploadImage(event, "main")} disabled={uploading || saving} />
           {uploading && <p className="text-sm font-semibold text-[#FD853A]">Uploading image, please wait...</p>}
-          {project.mainImageUrl && <img src={project.mainImageUrl} alt="Project preview" className="h-auto w-full rounded-[20px]" />}
+          {project.mainImageUrl && <AdminImagePreview src={project.mainImageUrl} alt="Project preview" />}
         </AdminCard>
 
         <AdminCard className="flex flex-col gap-5">
@@ -213,7 +213,7 @@ export default function ProjectForm({ mode }: { mode: "new" | "edit" }) {
           <input type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" onChange={(event) => uploadImage(event, "gallery")} disabled={uploading || saving} />
           <div className="grid grid-cols-2 gap-3">
             {galleryText.split(/\n/).filter(Boolean).map((url) => (
-              <img key={url} src={url} alt="" className="h-auto w-full rounded-[16px]" />
+              <AdminImagePreview key={url} src={url} alt="Project gallery preview" />
             ))}
           </div>
         </AdminCard>

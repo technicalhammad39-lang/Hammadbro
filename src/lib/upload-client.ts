@@ -1,4 +1,5 @@
 import { auth } from "@/lib/firebase";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export type UploadFolder = "portfolio" | "blogs" | "services" | "profile" | "site-assets";
 
@@ -35,5 +36,9 @@ export async function uploadAdminFile(file: File, folder: UploadFolder) {
     throw new Error(payload.error || payload.message || "Image upload failed.");
   }
 
-  return payload.url as string;
+  if (typeof payload.url !== "string" || !payload.url.trim()) {
+    throw new Error("Upload succeeded but no public image URL was returned.");
+  }
+
+  return normalizeImageUrl(payload.url);
 }

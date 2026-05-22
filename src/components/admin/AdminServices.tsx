@@ -3,7 +3,7 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AdminButton, AdminCard, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
 import { cardData } from "@/data/data";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
 import { ServiceDoc } from "@/lib/content-types";
@@ -118,7 +118,7 @@ export default function AdminServices() {
         {services.map((service) => (
           <AdminCard key={service.id} className="grid gap-5 lg:grid-cols-[160px_1fr_auto] lg:items-center">
             {service.imageUrl ? (
-              <img src={service.imageUrl} alt={service.title} className="h-auto w-full rounded-[18px] object-contain" />
+              <AdminImagePreview src={service.imageUrl} alt={service.title} />
             ) : (
               <div className="flex h-28 items-center justify-center rounded-[18px] bg-[#F2F4F7] text-sm text-[#667085]">No image</div>
             )}

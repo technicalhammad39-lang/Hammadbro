@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { portfolioCategories, PortfolioItem } from "@/data/data";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 function fallbackToDoc(project: PortfolioItem, index: number): PortfolioProjectDoc {
   return {
@@ -78,7 +79,7 @@ export default function PortfolioGallery({ fallback, initialCategory = "All" }: 
             className="group mb-6 block break-inside-avoid overflow-hidden rounded-[22px] bg-[#171717] shadow-md"
           >
             <div className="relative">
-              <img src={project.mainImageUrl} alt={project.title} className="h-auto w-full" />
+              <img src={normalizeImageUrl(project.mainImageUrl)} alt={project.title} className="h-auto w-full" />
               <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/45" />
               <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A]">{project.category}</p>

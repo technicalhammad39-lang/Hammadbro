@@ -3,7 +3,7 @@
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AdminButton, AdminCard, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
+import { AdminButton, AdminCard, AdminImagePreview, AdminSkeleton, AdminToast, ConfirmDialog, StatusMessage } from "@/components/admin/AdminUi";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { getActionErrorMessage, withAdminTimeout } from "@/lib/admin-action";
 import { db } from "@/lib/firebase";
@@ -77,7 +77,7 @@ export default function AdminProjects() {
         {projects.map((project) => (
           <AdminCard key={project.id} className="grid gap-5 lg:grid-cols-[160px_1fr_auto] lg:items-center">
             {project.mainImageUrl ? (
-              <img src={project.mainImageUrl} alt={project.title} className="h-auto w-full rounded-[18px]" />
+              <AdminImagePreview src={project.mainImageUrl} alt={project.title} />
             ) : (
               <div className="flex h-28 items-center justify-center rounded-[18px] bg-[#F2F4F7] text-sm text-[#667085]">No image</div>
             )}

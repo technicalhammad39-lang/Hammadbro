@@ -4,6 +4,7 @@ import React from 'react';
 import ArrowButton from './ArrowButton';
 import { Blog as BlogType } from '../../data/data'; 
 import Link from 'next/link';
+import { normalizeImageUrl } from '@/lib/image-url';
 
 interface BlogProps extends BlogType {
   priority?: boolean;
@@ -23,7 +24,7 @@ const Blog: React.FC<BlogProps> = ({ image, button, name, date, title, slug, exc
     <Link href={detailHref} onClick={preserveSectionBeforeNavigation} className="flex w-full max-w-[416px] flex-col items-start gap-5 sm:gap-[24px]">
       <div className="relative h-[220px] w-full overflow-hidden rounded-[18px] bg-[#171717] sm:h-[330px] lg:h-[360px] group">
         {image ? (
-          <img src={image} alt={title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+          <img src={normalizeImageUrl(image)} alt={title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#FD853A]/80 via-[#171717] to-[#171717]" />
         )}

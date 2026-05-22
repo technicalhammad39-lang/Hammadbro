@@ -6,6 +6,7 @@ import SourceBackLink from "@/components/ui/SourceBackLink";
 import RichTextContent from "@/components/ui/RichTextContent";
 import { blogs, getBlogPost } from "@/data/data";
 import { blogDocToBlog } from "@/lib/content-types";
+import { normalizeImageUrl } from "@/lib/image-url";
 import { getBlogBySlug } from "@/lib/public-content";
 
 export const dynamicParams = true;
@@ -81,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {post.image && (
           <div className="overflow-hidden rounded-[32px] bg-[#171717]">
-            <img src={post.image} alt={post.title} className="h-auto w-full" />
+            <img src={normalizeImageUrl(post.image)} alt={post.title} className="h-auto w-full" />
           </div>
         )}
 

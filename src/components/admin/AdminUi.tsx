@@ -1,6 +1,8 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export function AdminCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
@@ -127,6 +129,41 @@ export function ConfirmDialog({
           </AdminButton>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function AdminImagePreview({
+  src,
+  alt,
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  const imageUrl = normalizeImageUrl(src);
+
+  if (!imageUrl) return null;
+
+  return (
+    <div className="rounded-[20px] border border-[#E4E7EC] bg-[#F9FAFB] p-2">
+      {!failed ? (
+        <img
+          src={imageUrl}
+          alt={alt}
+          className={`h-auto w-full rounded-[16px] object-contain ${className}`}
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <div className="rounded-[16px] border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
+          Image uploaded, but this public URL is not loading yet. Check `NEXT_PUBLIC_UPLOAD_BASE_URL` and Hostinger public path.
+          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="mt-2 block break-all text-[#FD853A] underline">
+            {imageUrl}
+          </a>
+        </div>
+      )}
     </div>
   );
 }
