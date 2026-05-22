@@ -22,12 +22,12 @@ export default function ServicesCard({ title, desc, icon, imageSrc, priority = f
   const Icon = serviceIcons[icon];
 
   return (
-    <div className="group relative flex w-[86vw] max-w-[360px] min-h-[355px] flex-col overflow-hidden rounded-[26px] border border-white/25 bg-white/10 p-5 backdrop-blur-[10px] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#FD853A] sm:w-full sm:max-w-[340px] sm:min-h-[350px] sm:p-5 lg:max-w-[330px] lg:min-h-[360px] xl:max-w-[340px] xl:min-h-[368px]">
+    <div className="group relative flex w-[86vw] max-w-[360px] min-h-[372px] flex-col overflow-hidden rounded-[26px] border border-white/25 bg-white/10 p-5 backdrop-blur-[10px] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:bg-[#FD853A] sm:w-full sm:max-w-[340px] sm:min-h-[378px] sm:p-5 lg:max-w-[330px] lg:min-h-[390px] xl:max-w-[340px] xl:min-h-[398px]">
       <div className="absolute -right-12 -top-12 h-28 w-28 rounded-full bg-[#FD853A]/18 blur-2xl transition-colors duration-300 group-hover:bg-white/20" aria-hidden="true" />
       <div className="absolute -bottom-14 left-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" aria-hidden="true" />
 
       <div className="relative z-10 flex items-start justify-between gap-4">
-        <h1 className="max-w-[230px] text-[22px] font-semibold leading-tight text-white sm:max-w-[240px] sm:text-[21px] lg:max-w-[245px] lg:text-[21px] xl:text-[22px]">
+        <h1 className="max-w-[230px] text-[21px] font-semibold leading-tight text-white sm:max-w-[240px] sm:text-[20px] lg:max-w-[245px] lg:text-[20px] xl:text-[21px]">
           {title}
         </h1>
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#FD853A] text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[#FD853A] sm:h-12 sm:w-12">
@@ -35,13 +35,13 @@ export default function ServicesCard({ title, desc, icon, imageSrc, priority = f
         </div>
       </div>
 
-      <div className="relative z-10 mt-5 flex flex-1 flex-col gap-4 sm:mt-4 sm:gap-3">
+      <div className="relative z-10 mt-4 flex flex-1 flex-col gap-4 sm:mt-4 sm:gap-4">
         {imageSrc && (
-          <div className="flex h-[168px] items-center justify-center overflow-hidden rounded-[20px] bg-white/10 sm:h-[158px] lg:h-[170px] xl:h-[180px]">
+          <div className="flex h-[205px] items-center justify-center overflow-hidden rounded-[20px] sm:h-[178px] lg:h-[185px] xl:h-[195px]">
             <img
               src={normalizeImageUrl(imageSrc)}
               alt={title}
-              className="h-full w-full rounded-[20px] object-contain"
+              className="h-full w-full rounded-[20px] object-cover"
               loading={priority ? "eager" : "lazy"}
               decoding="async"
             />
