@@ -49,7 +49,11 @@ export function GenericSlider<T extends AllowedCard>({
   if (!isClient) {
     // Return a placeholder during SSR to prevent hydration mismatch
     return (
-      <div className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}>
+      <div
+        className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
+        data-lenis-prevent-touch
+        data-lenis-prevent-wheel
+      >
         <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
           <div className="flex gap-4 overflow-hidden">
             {data.slice(0, 3).map((item, index) => (
@@ -101,7 +105,11 @@ export function GenericSlider<T extends AllowedCard>({
   }
 
   return (
-    <div className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}>
+    <div
+      className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
+      data-lenis-prevent-touch
+      data-lenis-prevent-wheel
+    >
       <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
         <Swiper
           modules={[Pagination, Autoplay]}

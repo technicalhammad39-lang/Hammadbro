@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/next';
 import NotificationBanner from "@/components/NotificationBanner";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 
 const geistSans = Geist({
@@ -32,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <div className="w-full max-w-full overflow-x-hidden">
-          <NotificationBanner />
-          {children}
-          <Analytics />
-          <Footer/>
-        </div>
+        <SmoothScrollProvider>
+          <div className="w-full max-w-full overflow-x-hidden">
+            <NotificationBanner />
+            {children}
+            <Analytics />
+            <Footer/>
+          </div>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

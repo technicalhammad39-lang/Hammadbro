@@ -172,7 +172,10 @@ const Navbar = () => {
 
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
-                <div className="absolute top-[100%] left-0 right-0 mt-2 bg-[#171717] rounded-[25px] border border-white backdrop-blur-[15px] md:hidden z-40">
+                <div
+                    className="absolute top-[100%] left-0 right-0 mt-2 bg-[#171717] rounded-[25px] border border-white backdrop-blur-[15px] md:hidden z-40"
+                    data-lenis-prevent-touch
+                >
                     <div className="flex flex-col p-4 gap-2">
                         {menuItems.map((item) => (
                             <a

@@ -40,7 +40,11 @@ export default function PortfolioGallery({ initialCategory = "All" }: { initialC
 
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
-      <div className="hide-scrollbar -mx-5 flex snap-x snap-mandatory flex-nowrap gap-3 overflow-x-auto scroll-smooth px-5 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+      <div
+        className="hide-scrollbar -mx-5 flex snap-x snap-mandatory flex-nowrap gap-3 overflow-x-auto scroll-smooth px-5 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+        data-lenis-prevent-touch
+        data-lenis-prevent-wheel
+      >
         {categories.map((category) => (
           <button
             key={category}
