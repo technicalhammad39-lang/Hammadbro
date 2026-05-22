@@ -94,14 +94,16 @@ export default function Home() {
             </div>
           </div>
 
-          <Image
-            src="/my-pic.webp"
-            alt="Hammad graphic designer portrait"
-            width={952}
-            height={636}
-            className="hero-portrait-fade hero-load-portrait absolute left-[45%] top-[48px] z-20 w-[360px] -translate-x-1/2 object-contain transition-transform duration-500 group-hover:scale-[1.015] lg:left-[49.5%] lg:top-[10px] lg:w-[510px] xl:left-[51.5%] xl:top-[-16px] xl:w-[640px]"
-            priority
-          />
+          <div className="hero-load-portrait pointer-events-none absolute inset-x-0 top-[48px] z-20 flex justify-center lg:top-[10px] xl:top-[-16px]">
+            <Image
+              src="/my-pic.webp"
+              alt="Hammad graphic designer portrait"
+              width={952}
+              height={636}
+              className="hero-portrait-fade w-[360px] object-contain transition-transform duration-500 group-hover:scale-[1.015] lg:w-[510px] xl:w-[640px]"
+              priority
+            />
+          </div>
 
           <div className="hero-load-buttons absolute left-1/2 top-[420px] z-50 w-full -translate-x-1/2 px-4 lg:top-[485px]">
             <div className="mx-auto flex max-w-[390px] justify-center">
