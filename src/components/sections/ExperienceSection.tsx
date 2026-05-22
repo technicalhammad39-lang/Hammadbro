@@ -8,39 +8,63 @@ import { Experience } from "@/data/data";
 import { experienceDocToExperience, WorkExperienceDoc } from "@/lib/content-types";
 import { db } from "@/lib/firebase";
 
-export default function ExperienceSection({ fallback }: { fallback: Experience[] }) {
-  const [items, setItems] = useState<Experience[]>(fallback);
+export default function ExperienceSection() {
+  const [items, setItems] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, "workExperience"), where("status", "==", "published"), orderBy("order", "asc")),
       (snapshot) => {
         const firestoreItems = snapshot.docs.map((doc) => experienceDocToExperience({ id: doc.id, ...doc.data() } as WorkExperienceDoc));
-        setItems(firestoreItems.length ? firestoreItems : fallback);
+        setItems(firestoreItems);
+        setLoading(false);
       },
       (error) => {
         console.error("Experience realtime listener failed:", error);
-        setItems(fallback);
+        setItems([]);
+        setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, [fallback]);
+  }, []);
 
   return (
-    <section className="w-full min-h-0 flex flex-col items-start mx-auto px-5 sm:px-6 lg:px-[71px] py-10 lg:py-14">
-      <Reveal className="w-full h-auto flex flex-wrap lg:flex-row items-start justify-center gap-x-2.5 mb-6 lg:mb-6 text-center lg:text-left">
+    <section className="w-full min-h-0 flex flex-col items-start mx-auto px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
+      <Reveal className="flex w-full flex-col items-center justify-center gap-1 text-center lg:hidden mb-6">
+        <CustomeText title="My" className="font-medium text-[clamp(30px,9vw,36px)] text-[#344054]" />
+        <div className="flex items-center justify-center gap-2 whitespace-nowrap">
+          <CustomeText title="Work" className="font-medium text-[clamp(30px,9vw,36px)] text-[#344054]" />
+          <CustomeText title="Experience" className="font-medium text-[clamp(30px,9vw,36px)] text-[#FD853A]" />
+        </div>
+      </Reveal>
+
+      <Reveal className="hidden w-full h-auto lg:flex flex-wrap lg:flex-row items-start justify-center gap-x-2.5 mb-6 lg:mb-6 text-center lg:text-left">
         <CustomeText title="My" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#344054]" />
         <CustomeText title="Work" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
         <CustomeText title="Experience" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
       </Reveal>
 
-      <div className="w-full lg:hidden">
+      {loading && (
+        <div className="grid w-full gap-5 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="h-[150px] animate-pulse rounded-[24px] bg-[#F2F4F7]" />
+          ))}
+        </div>
+      )}
+
+      {!loading && items.length === 0 && (
+        <div className="w-full rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Experience details will appear here soon.</div>
+      )}
+
+      {!loading && items.length > 0 && <div className="relative w-full lg:hidden">
+        <div className="timeline-flow-line absolute left-3 top-3 bottom-3 w-[2px] rounded-full bg-[#171717]/20" aria-hidden="true" />
         {items.map((exp) => (
-          <div key={`${exp.company}-${exp.role}`} className="mb-8 last:mb-0">
+          <div key={`${exp.company}-${exp.role}`} className="relative z-10 mb-7 last:mb-0">
             <div className="flex items-start gap-4">
               <div className="relative flex-shrink-0 mt-2">
-                <div className="w-6 h-6 rounded-full border-2 border-dashed border-[#1D2939] bg-white" />
+                <div className="w-6 h-6 rounded-full border-2 border-dashed border-[#1D2939] bg-white shadow-[0_0_0_5px_#fff]" />
                 <div className={`absolute top-1 left-1 w-4 h-4 rounded-full ${exp.dotColor}`} />
               </div>
 
@@ -55,9 +79,9 @@ export default function ExperienceSection({ fallback }: { fallback: Experience[]
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
-      <Reveal className="hidden w-full justify-center lg:flex">
+      {!loading && items.length > 0 && <Reveal className="hidden w-full justify-center lg:flex">
         <div className="grid w-full max-w-[1210px] grid-cols-[minmax(300px,420px)_64px_minmax(440px,560px)] gap-x-8 gap-y-8">
           {items.map((exp, index) => (
             <Fragment key={`${exp.company}-${exp.role}`}>
@@ -68,10 +92,10 @@ export default function ExperienceSection({ fallback }: { fallback: Experience[]
 
               <div className="relative flex justify-center pt-1">
                 {index < items.length - 1 && (
-                  <div className="absolute left-1/2 top-7 -bottom-11 w-[2px] -translate-x-1/2 border-l-2 border-dashed border-[#1D2939]" />
+                  <div className="timeline-flow-line absolute left-1/2 top-7 -bottom-11 w-[2px] -translate-x-1/2 rounded-full bg-[#171717]/20" />
                 )}
                 <div className="relative flex h-12 w-12 items-center justify-center">
-                  <div className="absolute h-12 w-12 rounded-full border-2 border-dashed border-[#1D2939] bg-white" />
+                  <div className="absolute h-12 w-12 rounded-full border-2 border-dashed border-[#1D2939] bg-white shadow-[0_0_0_7px_#fff]" />
                   <div className={`z-10 h-9 w-9 rounded-full ${exp.dotColor}`} />
                 </div>
               </div>
@@ -85,7 +109,7 @@ export default function ExperienceSection({ fallback }: { fallback: Experience[]
             </Fragment>
           ))}
         </div>
-      </Reveal>
+      </Reveal>}
     </section>
   );
 }

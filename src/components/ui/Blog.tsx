@@ -11,7 +11,7 @@ interface BlogProps extends BlogType {
   sourceHash?: string;
 }
 
-const Blog: React.FC<BlogProps> = ({ image, button, name, date, title, slug, excerpt, sourceHash }) => {
+const Blog: React.FC<BlogProps> = ({ image, button, name, date, title, slug, excerpt, sourceHash, priority = false }) => {
   const detailHref = sourceHash ? `/blog/${slug}?from=${encodeURIComponent(sourceHash)}` : `/blog/${slug}`;
 
   const preserveSectionBeforeNavigation = () => {
@@ -24,7 +24,13 @@ const Blog: React.FC<BlogProps> = ({ image, button, name, date, title, slug, exc
     <Link href={detailHref} onClick={preserveSectionBeforeNavigation} className="flex w-full max-w-[416px] flex-col items-start gap-5 sm:gap-[24px]">
       <div className="relative h-[220px] w-full overflow-hidden rounded-[18px] bg-[#171717] sm:h-[330px] lg:h-[360px] group">
         {image ? (
-          <img src={normalizeImageUrl(image)} alt={title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+          <img
+            src={normalizeImageUrl(image)}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+          />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#FD853A]/80 via-[#171717] to-[#171717]" />
         )}

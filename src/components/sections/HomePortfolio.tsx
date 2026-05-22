@@ -3,30 +3,13 @@
 import { collection, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PortfolioItem } from "@/data/data";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { normalizeImageUrl } from "@/lib/image-url";
 
-function fallbackToDoc(project: PortfolioItem, index: number): PortfolioProjectDoc {
-  return {
-    title: project.title,
-    slug: project.slug,
-    category: project.category,
-    shortDescription: project.desc,
-    fullDescription: project.solution,
-    servicesUsed: project.services,
-    mainImageUrl: project.image,
-    images: [],
-    order: index,
-    featured: index === 0,
-    showOnHome: true,
-    status: "published",
-  };
-}
-
-export default function HomePortfolio({ fallback }: { fallback: PortfolioItem[] }) {
-  const [projects, setProjects] = useState<PortfolioProjectDoc[]>(fallback.slice(0, 3).map(fallbackToDoc));
+export default function HomePortfolio() {
+  const [projects, setProjects] = useState<PortfolioProjectDoc[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -39,16 +22,32 @@ export default function HomePortfolio({ fallback }: { fallback: PortfolioItem[] 
       ),
       (snapshot) => {
         const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as PortfolioProjectDoc[];
-        setProjects(items.length ? items : fallback.slice(0, 3).map(fallbackToDoc));
+        setProjects(items);
+        setLoading(false);
       },
       (error) => {
         console.error("Home portfolio realtime listener failed:", error);
-        setProjects(fallback.slice(0, 3).map(fallbackToDoc));
+        setProjects([]);
+        setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, [fallback]);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex w-full max-w-[980px] flex-col gap-8">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="h-[260px] animate-pulse rounded-[22px] bg-[#F2F4F7] sm:h-[360px]" />
+        ))}
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return <div className="w-full max-w-[980px] rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Portfolio projects will appear here soon.</div>;
+  }
 
   return (
     <div className="flex w-full max-w-[980px] flex-col gap-8">
@@ -70,6 +69,8 @@ export default function HomePortfolio({ fallback }: { fallback: PortfolioItem[] 
                   src={normalizeImageUrl(project.mainImageUrl)}
                   alt={project.title}
                   className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/35" />
                 <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-5 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">

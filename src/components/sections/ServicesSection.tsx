@@ -18,29 +18,46 @@ function serviceToCard(service: ServiceDoc): CardData {
   };
 }
 
-export default function ServicesSection({ fallback }: { fallback: CardData[] }) {
-  const [items, setItems] = useState<CardData[]>(fallback);
+export default function ServicesSection() {
+  const [items, setItems] = useState<CardData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, "services"), where("status", "==", "published"), orderBy("order", "asc")),
       (snapshot) => {
         const services = snapshot.docs.map((item) => serviceToCard({ id: item.id, ...item.data() } as ServiceDoc));
-        setItems(services.length ? services : fallback);
+        setItems(services);
+        setLoading(false);
       },
       (error) => {
         console.error("Services realtime listener failed:", error);
-        setItems(fallback);
+        setItems([]);
+        setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, [fallback]);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div key={index} className="h-[236px] animate-pulse rounded-[24px] bg-white/10" />
+        ))}
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
+    return <div className="rounded-[24px] bg-white/10 px-6 py-5 text-center font-semibold text-white/70">Services will appear here soon.</div>;
+  }
 
   return (
     <GenericSlider
       data={items}
-      slidesPerView={3}
+      slidesPerView={5}
       heightClass="h-auto"
       cardType="hover"
     />

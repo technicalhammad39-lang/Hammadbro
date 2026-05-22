@@ -11,7 +11,7 @@ interface PortfolioCardProps extends Pick<PortfolioItem, 'image' | 'title' | 'hr
   sourceHash?: string;
 }
 
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc, category, sourceHash }) => {
+const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc, category, sourceHash, priority = false }) => {
   const detailHref = sourceHash ? `${href}?from=${encodeURIComponent(sourceHash)}` : href;
 
   const preserveSectionBeforeNavigation = () => {
@@ -39,6 +39,8 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc,
         src={normalizeImageUrl(image)}
         alt={title}
         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
       />
 
       <div className="absolute inset-0 z-10 bg-black/0 transition-colors duration-500 ease-out md:group-hover:bg-black/55 md:group-focus-visible:bg-black/55" />

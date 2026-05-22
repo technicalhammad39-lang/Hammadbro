@@ -4,15 +4,16 @@ import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+const menuItems = [
+    { label: "Home", href: "/#home", sectionId: "home" },
+    { label: "About", href: "/#about", sectionId: "about" },
+    { label: "Service", href: "/#services", sectionId: "services" },
+    { label: "Resume", href: "/HammadGfx-CV.pdf", download: true },
+    { label: "Project", href: "/#projects", sectionId: "projects" },
+    { label: "Contact", href: "/#contact", sectionId: "contact" },
+];
+
 const Navbar = () => {
-    const menuItems = [
-        { label: "Home", href: "/#home" },
-        { label: "About", href: "/#about" },
-        { label: "Service", href: "/#services" },
-        { label: "Resume", href: "/HammadGfx-CV.pdf", download: true },
-        { label: "Project", href: "/#projects" },
-        { label: "Contact", href: "/#contact" },
-    ];
     const [selected, setSelected] = useState("Home");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(true);
@@ -69,6 +70,42 @@ const Navbar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const sectionItems = menuItems.filter((item) => item.sectionId);
+        const sections = sectionItems
+            .map((item) => ({ ...item, element: document.getElementById(item.sectionId!) }))
+            .filter((item): item is typeof item & { element: HTMLElement } => Boolean(item.element));
+
+        if (!sections.length) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+                if (!visible) {
+                    return;
+                }
+
+                const activeItem = sections.find((item) => item.element === visible.target);
+                if (activeItem) {
+                    setSelected(activeItem.label);
+                }
+            },
+            {
+                rootMargin: "-34% 0px -48% 0px",
+                threshold: [0.12, 0.25, 0.45, 0.65],
+            },
+        );
+
+        sections.forEach((item) => observer.observe(item.element));
+
+        return () => observer.disconnect();
+    }, []);
+
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -87,7 +124,7 @@ const Navbar = () => {
                 {menuItems.slice(0, 3).map((item) => (
                     <a
                         key={item.label}
-                        className={`w-[90px] lg:w-[128px] h-[50px] lg:h-[56px] flex items-center justify-center rounded-[60px] text-sm lg:text-base font-medium transition duration-300 ${selected === item.label ? 'bg-[#FD853A] font-bold' : 'bg-transparent hover:bg-[#232323]'}`}
+                        className={`w-[90px] lg:w-[128px] h-[50px] lg:h-[56px] flex items-center justify-center rounded-[60px] text-sm lg:text-base font-medium transition-all duration-300 ease-out ${selected === item.label ? 'scale-[1.02] bg-[#FD853A] font-bold shadow-[0_0_22px_rgba(253,133,58,0.35)]' : 'bg-transparent hover:bg-[#232323]'}`}
                         href={item.href}
                         download={item.download}
                         onClick={() => handleMenuClick(item.label)}
@@ -115,7 +152,7 @@ const Navbar = () => {
                 {menuItems.slice(3).map((item) => (
                     <a
                         key={item.label}
-                        className={`w-[90px] lg:w-[128px] h-[50px] lg:h-[56px] flex items-center justify-center rounded-[60px] text-sm lg:text-base font-medium transition duration-300 ${selected === item.label ? 'bg-[#FD853A] font-bold' : 'bg-transparent hover:bg-[#232323]'}`}
+                        className={`w-[90px] lg:w-[128px] h-[50px] lg:h-[56px] flex items-center justify-center rounded-[60px] text-sm lg:text-base font-medium transition-all duration-300 ease-out ${selected === item.label ? 'scale-[1.02] bg-[#FD853A] font-bold shadow-[0_0_22px_rgba(253,133,58,0.35)]' : 'bg-transparent hover:bg-[#232323]'}`}
                         href={item.href}
                         download={item.download}
                         onClick={() => handleMenuClick(item.label)}
@@ -140,7 +177,7 @@ const Navbar = () => {
                         {menuItems.map((item) => (
                             <a
                                 key={item.label}
-                                className={`w-full h-[50px] flex items-center justify-center rounded-[25px] text-base font-medium transition duration-300 ${selected === item.label ? 'bg-[#FD853A] font-bold' : 'bg-transparent hover:bg-[#232323]'}`}
+                                className={`w-full h-[50px] flex items-center justify-center rounded-[25px] text-base font-medium transition-all duration-300 ease-out ${selected === item.label ? 'bg-[#FD853A] font-bold shadow-[0_0_18px_rgba(253,133,58,0.3)]' : 'bg-transparent hover:bg-[#232323]'}`}
                                 href={item.href}
                                 download={item.download}
                                 onClick={() => handleMenuClick(item.label)}

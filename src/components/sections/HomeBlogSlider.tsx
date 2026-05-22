@@ -7,24 +7,41 @@ import { Blog } from "@/data/data";
 import { blogDocToBlog, BlogDoc } from "@/lib/content-types";
 import { db } from "@/lib/firebase";
 
-export default function HomeBlogSlider({ fallback }: { fallback: Blog[] }) {
-  const [blogs, setBlogs] = useState<Blog[]>(fallback);
+export default function HomeBlogSlider() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, "blogs"), where("status", "==", "published"), orderBy("createdAt", "desc")),
       (snapshot) => {
         const items = snapshot.docs.map((doc) => blogDocToBlog({ id: doc.id, ...doc.data() } as BlogDoc)).slice(0, 6);
-        setBlogs(items.length ? items : fallback);
+        setBlogs(items);
+        setLoading(false);
       },
       (error) => {
         console.error("Home blog realtime listener failed:", error);
-        setBlogs(fallback);
+        setBlogs([]);
+        setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, [fallback]);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid w-full gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="h-[360px] animate-pulse rounded-[24px] bg-[#F2F4F7]" />
+        ))}
+      </div>
+    );
+  }
+
+  if (blogs.length === 0) {
+    return <div className="w-full rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Blog posts will appear here soon.</div>;
+  }
 
   return (
     <GenericSlider

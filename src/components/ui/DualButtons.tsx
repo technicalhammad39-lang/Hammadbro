@@ -1,7 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+
+function ButtonArrow() {
+  return (
+    <span className="cta-arrow-stack shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
 
 export default function DualToggleButtons() {
   const [active, setActive] = useState<"portfolio" | "hire">("portfolio");
@@ -20,14 +32,9 @@ export default function DualToggleButtons() {
           }`}
       >
         View Portfolio
-        <ArrowUpRight
-          size={16}
-          className={`transition-all duration-300 ${
-            active === "portfolio"
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-1 group-hover:opacity-100"
-          }`}
-        />
+        <span className={active === "portfolio" ? "opacity-100" : "opacity-0 transition-opacity duration-300 group-hover:opacity-100"}>
+          <ButtonArrow />
+        </span>
       </a>
 
       <a
@@ -42,14 +49,9 @@ export default function DualToggleButtons() {
           }`}
       >
         Hire me
-        <ArrowUpRight
-          size={16}
-          className={`transition-all duration-300 ${
-            active === "hire"
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-1 group-hover:opacity-100"
-          }`}
-        />
+        <span className={active === "hire" ? "opacity-100" : "opacity-0 transition-opacity duration-300 group-hover:opacity-100"}>
+          <ButtonArrow />
+        </span>
       </a>
     </div>
   );

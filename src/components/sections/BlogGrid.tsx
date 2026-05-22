@@ -7,8 +7,9 @@ import { Blog } from "@/data/data";
 import { blogDocToBlog, BlogDoc } from "@/lib/content-types";
 import { db } from "@/lib/firebase";
 
-export default function BlogGrid({ fallback, limitCount }: { fallback: Blog[]; limitCount?: number }) {
-  const [blogs, setBlogs] = useState<Blog[]>(fallback);
+export default function BlogGrid({ limitCount }: { limitCount?: number }) {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -20,16 +21,28 @@ export default function BlogGrid({ fallback, limitCount }: { fallback: Blog[]; l
           items = items.slice(0, limitCount);
         }
 
-        setBlogs(items.length ? items : limitCount ? fallback.slice(0, limitCount) : fallback);
+        setBlogs(items);
+        setLoading(false);
       },
       (error) => {
         console.error("Blog grid realtime listener failed:", error);
-        setBlogs(limitCount ? fallback.slice(0, limitCount) : fallback);
+        setBlogs([]);
+        setLoading(false);
       },
     );
 
     return unsubscribe;
-  }, [fallback, limitCount]);
+  }, [limitCount]);
+
+  if (loading) {
+    return (
+      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        {Array.from({ length: limitCount || 6 }).map((_, index) => (
+          <div key={index} className="h-[360px] animate-pulse rounded-[24px] bg-[#F2F4F7]" />
+        ))}
+      </div>
+    );
+  }
 
   if (blogs.length === 0) {
     return <div className="rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">No blogs added yet.</div>;

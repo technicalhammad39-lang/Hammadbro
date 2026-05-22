@@ -3,8 +3,8 @@ import CustomeText from "@/components/ui/CustomeText";
 import DualToggleButtons from "@/components/ui/DualButtons";
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
-import { experiences, iconAndText, skills, blogs, portfolioData, cardData, reviews } from '../data/data';
+import { BadgeCheck, Clock, Lightbulb, MessageCircle, Printer, RefreshCcw, Star, Users } from "lucide-react";
+import { iconAndText, skills, reviews } from '../data/data';
 import { GenericSlider } from "@/components/ui/GenericSlider";
 import ClientOnly from "@/components/ui/ClientOnly";
 import Reveal from "@/components/ui/Reveal";
@@ -28,6 +28,138 @@ function renderCounterLabel(label: string) {
   const decimals = match[1].includes(".") ? match[1].split(".")[1].length : 0;
 
   return <AnimatedCounter value={value} decimals={decimals} suffix={suffix} />;
+}
+
+function SkillsSlider() {
+  return (
+    <div className="relative w-full h-[100px] sm:h-[147px] bg-[#FB6514] rounded-tl-4xl rounded-br-4xl overflow-hidden">
+      <div className="absolute top-6 sm:top-8 left-0 w-full h-[52px] sm:h-[63px] bg-white -rotate-2 md:-rotate-[1.9deg] z-10 flex items-center overflow-hidden">
+        <div className="hidden sm:flex marquee gap-8 w-max">
+          {[...skills, ...skills].map((skill, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-5 text-[#000000] text-[48px] whitespace-nowrap"
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 35 35"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
+                  fill="#FD853A"
+                />
+              </svg>
+              {skill}
+            </div>
+          ))}
+        </div>
+        <div className="flex sm:hidden w-full justify-center gap-4 overflow-hidden px-6">
+          {skills.slice(0, 2).map((skill, index) => (
+            <div
+              key={index}
+              className="flex shrink-0 items-center gap-2 text-[#000000] text-[22px] whitespace-nowrap"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 35 35"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
+                  fill="#FD853A"
+                />
+              </svg>
+              {skill}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const heroSocialLinks = [
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/hammadgfx",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+        <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.35 8h4.3v14H.35V8Zm7.2 0h4.12v1.9h.06c.57-1.08 1.98-2.22 4.08-2.22 4.36 0 5.17 2.87 5.17 6.6V22h-4.3v-6.84c0-1.63-.03-3.73-2.27-3.73-2.28 0-2.63 1.78-2.63 3.61V22H7.55V8Z" />
+      </svg>
+    ),
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/923280830815",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+        <path fill="currentColor" d="M20.52 3.48A11.82 11.82 0 0 0 12.1 0C5.54 0 .22 5.31.22 11.86c0 2.09.55 4.14 1.6 5.94L.12 24l6.36-1.67a11.85 11.85 0 0 0 5.62 1.43h.01C18.66 23.76 24 18.45 24 11.9c0-3.18-1.24-6.17-3.48-8.42ZM12.1 21.75h-.01a9.83 9.83 0 0 1-5.01-1.37l-.36-.22-3.77.99 1.01-3.68-.24-.38a9.78 9.78 0 0 1-1.5-5.23C2.22 6.42 6.65 2 12.1 2a9.8 9.8 0 0 1 6.99 2.9 9.78 9.78 0 0 1 2.9 7c0 5.43-4.44 9.85-9.89 9.85Zm5.42-7.37c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48a8.96 8.96 0 0 1-1.66-2.06c-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35Z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Mail",
+    href: "mailto:hire@hammadgfx.online",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+        <path fill="currentColor" d="M2.5 5A2.5 2.5 0 0 1 5 2.5h14A2.5 2.5 0 0 1 21.5 5v14A2.5 2.5 0 0 1 19 21.5H5A2.5 2.5 0 0 1 2.5 19V5Zm2.16.65 7.34 5.5 7.34-5.5A.75.75 0 0 0 19 4H5a.75.75 0 0 0-.34 1.65Zm15.34 2.1-7.55 5.66a.75.75 0 0 1-.9 0L4 7.75V19c0 .41.34.75.75.75h14.5c.41 0 .75-.34.75-.75V7.75Z" />
+      </svg>
+    ),
+  },
+];
+
+const hireHighlights = [
+  { title: "Fast Delivery", icon: Clock },
+  { title: "Print Ready Designs", icon: Printer },
+  { title: "Brand Identity Expertise", icon: BadgeCheck },
+  { title: "Unlimited Revisions", icon: RefreshCcw },
+  { title: "Creative Problem Solving", icon: Lightbulb },
+  { title: "Professional Communication", icon: MessageCircle },
+];
+
+const toolBadges = [
+  { name: "Adobe Photoshop", level: 96 },
+  { name: "Illustrator", level: 92 },
+  { name: "CorelDRAW", level: 90 },
+  { name: "Figma", level: 82 },
+  { name: "Canva", level: 88 },
+];
+
+function HeroSocialLinks({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {heroSocialLinks.map((item) => (
+        <Link
+          key={item.label}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={item.label}
+          className="group flex h-10 w-10 items-center justify-center rounded-full border border-[#FD853A]/25 bg-white/75 text-[#171717] shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:border-[#FD853A] hover:bg-[#FD853A] hover:text-white hover:shadow-[0_12px_30px_rgba(253,133,58,0.35)]"
+        >
+          <span className="transition-transform duration-300 group-hover:scale-105">{item.icon}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function CtaArrow() {
+  return (
+    <span className="cta-arrow-stack shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
 }
 
 export default function Home() {
@@ -58,6 +190,7 @@ export default function Home() {
               <p className="text-[12px] font-semibold leading-snug text-[#344054] lg:text-[14px] xl:text-[16px]">
                 I create premium logos, brand identities, social media designs, and marketing visuals that help businesses look trusted, professional, and impossible to ignore.
               </p>
+              <HeroSocialLinks className="mt-4" />
             </div>
           </div>
 
@@ -105,7 +238,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="hero-load-buttons absolute left-1/2 top-[420px] z-50 w-full -translate-x-1/2 px-4 lg:top-[485px]">
+          <div className="hero-load-buttons absolute inset-x-0 top-[420px] z-50 w-full px-4 lg:top-[485px]">
             <div className="mx-auto flex max-w-[390px] justify-center">
               <DualToggleButtons />
             </div>
@@ -163,19 +296,22 @@ export default function Home() {
               </span>
             </h1>
             <div className="mt-4 w-full flex flex-col gap-3 md:hidden">
-              <a href="#projects" className="w-full rounded-full bg-[#FD853A] px-6 py-3.5 text-center text-base font-semibold text-white shadow-md transition-colors hover:bg-[#e4752f]">
-                View Portfolio
+              <a href="#projects" className="premium-cta group flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-center text-base font-semibold text-white shadow-md transition-transform duration-300 active:scale-[0.98]">
+                <span>View Portfolio</span>
+                <CtaArrow />
               </a>
-              <a href="#contact" className="w-full rounded-full border border-[#171717] px-6 py-3.5 text-center text-base font-semibold text-[#171717] transition-colors hover:bg-[#171717] hover:text-white">
-                Hire Me
+              <a href="#contact" className="premium-cta-outline group flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-center text-base font-semibold text-[#171717] transition-colors duration-300 hover:text-white active:scale-[0.98]">
+                <span>Hire Me</span>
+                <CtaArrow />
               </a>
+              <HeroSocialLinks className="justify-center pt-1" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Services */}
-      <section id="services" className="relative flex flex-col w-full min-h-0 gap-8 sm:gap-10 lg:gap-12 items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-14 lg:py-[72px] bg-[#171717] rounded-[30px] sm:rounded-[50px] overflow-hidden">
+      <section id="services" className="relative flex flex-col w-full min-h-0 gap-6 sm:gap-8 items-center px-5 sm:px-6 lg:px-[71px] py-10 sm:py-12 lg:py-14 bg-[#171717] rounded-[30px] sm:rounded-[50px] overflow-hidden">
         <Image
           src="/Frame 77.svg"
           alt="image"
@@ -194,11 +330,11 @@ export default function Home() {
         </Reveal>
 
         <div className="relative w-full max-w-[1299px] flex items-start justify-center">
-          <ServicesSection fallback={cardData} />
+          <ServicesSection />
         </div>
       </section>
 
-      <ExperienceSection fallback={experiences} />
+      <ExperienceSection />
 
       {/* Portfolio */}
       <section id="projects" className="w-full flex flex-col items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-20 gap-8 lg:gap-12">
@@ -226,12 +362,12 @@ export default function Home() {
         </Reveal>
 
         <div className="w-full flex flex-col items-center gap-8 lg:gap-12 max-w-[1290px]">
-          <HomePortfolio fallback={portfolioData} />
+          <HomePortfolio />
         </div>
       </section>
 
       {/* Hire Me */}
-      <section id="about" className="w-full flex flex-col lg:flex-row items-center justify-between px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[96px] bg-[#F2F4F7] rounded-[32px] lg:rounded-[50px] gap-8 lg:gap-[76px]">
+      <section id="about" className="w-full flex flex-col lg:flex-row items-center justify-between px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[88px] bg-[#F2F4F7] rounded-[32px] lg:rounded-[50px] gap-8 lg:gap-[58px]">
         <Reveal className="relative w-full max-w-[360px] sm:max-w-[460px] lg:max-w-[500px] aspect-square group mx-auto lg:mx-0">
           <Image
             src="/pic2.webp"
@@ -252,7 +388,7 @@ export default function Home() {
           />
         </Reveal>
 
-        <Reveal className="w-full max-w-xl flex flex-col items-start gap-6 sm:gap-8" delay={0.08}>
+        <Reveal className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start gap-6 sm:gap-7" delay={0.08}>
           <div className="flex flex-wrap text-[36px] sm:text-5xl lg:text-6xl font-semibold gap-2 leading-tight">
             <CustomeText title="Why" className="text-[#344054]" />
             <CustomeText title="Hire Me" className="text-[#FD853A]" />
@@ -263,33 +399,80 @@ export default function Home() {
             I create designs that help businesses look trusted, professional, and ready to sell. From brand identity and social media visuals to print-ready marketing designs, my focus is always on clean communication, strong first impressions, and consistent visual branding.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-8 w-full">
-            <div className="flex flex-col">
-              <AnimatedCounter value={100} suffix="+" className="text-[32px] sm:text-[36px] font-medium text-[#1D2939]" />
-              <CustomeText
-                title="Designs Completed"
-                className="text-lg text-[#667085]"
-              />
+          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+            {hireHighlights.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="group flex items-center gap-3 rounded-[20px] border border-white bg-white/70 p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#FD853A]/35 hover:shadow-[0_18px_38px_rgba(23,23,23,0.08)]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFEAD5] text-[#FD853A] transition-all duration-300 group-hover:bg-[#FD853A] group-hover:text-white">
+                    <Icon size={19} />
+                  </span>
+                  <span className="text-sm font-semibold text-[#1D2939] sm:text-base">{item.title}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="grid w-full grid-cols-2 gap-2 sm:hidden">
+            <div className="rounded-[20px] bg-white p-3 text-center shadow-sm">
+              <AnimatedCounter value={100} suffix="+" className="stat-number-glow text-[26px] font-semibold text-[#1D2939]" />
+              <p className="mt-1 text-[12px] font-medium leading-tight text-[#667085]">Designs Completed</p>
             </div>
-            <div className="flex flex-col">
-              <AnimatedCounter value={3} suffix="+" className="text-[32px] sm:text-[36px] font-medium text-[#1D2939]" />
-              <CustomeText
-                title="Years Experience"
-                className="text-lg text-[#667085]"
-              />
+            <div className="rounded-[20px] bg-white p-3 text-center shadow-sm">
+              <AnimatedCounter value={3} suffix="+" className="stat-number-glow text-[26px] font-semibold text-[#1D2939]" />
+              <p className="mt-1 text-[12px] font-medium leading-tight text-[#667085]">Years Experience</p>
+            </div>
+          </div>
+
+          <div className="hidden w-full grid-cols-1 gap-3 sm:grid sm:grid-cols-3">
+            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+              <AnimatedCounter value={500} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
+              <p className="mt-1 text-sm font-medium text-[#667085]">Projects Delivered</p>
+            </div>
+            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+              <AnimatedCounter value={3} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
+              <p className="mt-1 text-sm font-medium text-[#667085]">Years Experience</p>
+            </div>
+            <div className="rounded-[22px] bg-white p-4 shadow-sm">
+              <AnimatedCounter value={100} suffix="+" className="stat-number-glow text-[30px] font-semibold text-[#1D2939]" />
+              <p className="mt-1 text-sm font-medium text-[#667085]">Happy Clients</p>
+            </div>
+          </div>
+
+          <div className="w-full rounded-[24px] bg-white p-4 shadow-sm">
+            <div className="mb-4 flex items-center gap-2 text-[#1D2939]">
+              <Users size={20} className="text-[#FD853A]" />
+              <p className="font-semibold">Tools I Use</p>
+            </div>
+            <div className="grid gap-3">
+              {toolBadges.map((tool) => (
+                <div key={tool.name}>
+                  <div className="mb-1 flex items-center justify-between text-sm font-semibold text-[#344054]">
+                    <span>{tool.name}</span>
+                    <span>{tool.level}%</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-[#F2F4F7]">
+                    <div className="h-full rounded-full bg-[#FD853A] transition-[width] duration-1000 ease-out" style={{ width: `${tool.level}%` }} />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="flex w-full flex-col gap-3 sm:flex-row">
-            <a href="#contact" className="w-full cursor-pointer sm:w-auto px-6 py-3.5 rounded-[20px] border border-[#151515] bg-[#151515] text-white font-semibold text-xl sm:text-[22px] transition-all duration-300 hover:bg-[#FD853A] hover:border-[#FD853A] text-center">
-              Hire Me
+            <a href="#contact" className="premium-cta group flex w-full cursor-pointer items-center justify-center gap-2 rounded-[20px] px-6 py-3.5 text-center text-xl font-semibold text-white transition-transform duration-300 active:scale-[0.98] sm:w-auto sm:text-[22px]">
+              <span>Hire Me</span>
+              <CtaArrow />
             </a>
-            <a href="/HammadGfx-CV.pdf" download className="w-full cursor-pointer sm:w-auto px-6 py-3.5 rounded-[20px] border border-[#151515] text-[#151515] font-semibold text-xl sm:text-[22px] transition-all duration-300 hover:bg-[#151515] hover:text-white text-center">
-              Open CV
+            <a href="/HammadGfx-CV.pdf" download className="premium-cta-outline group flex w-full cursor-pointer items-center justify-center gap-2 rounded-[20px] px-6 py-3.5 text-center text-xl font-semibold text-[#151515] transition-all duration-300 hover:text-white active:scale-[0.98] sm:w-auto sm:text-[22px]">
+              <span>Open CV</span>
+              <CtaArrow />
             </a>
           </div>
         </Reveal>
       </section>
+
+      <SkillsSlider />
 
       {/* Testimonials */}
       <section className="relative flex flex-col w-full min-h-0 items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[90px] gap-8 sm:gap-12 bg-[#171717] rounded-[30px] sm:rounded-[40px] lg:rounded-[50px] overflow-hidden">
@@ -348,8 +531,8 @@ export default function Home() {
           </div>
         </Reveal>
 
-        <div className="w-full max-w-3xl rounded-[28px] border border-[#E4E7EC] bg-white p-3 shadow-sm sm:p-4 md:p-5">
-          <div className="mb-3 flex items-center gap-3 px-1">
+        <div className="w-full max-w-5xl rounded-[32px] border border-[#E4E7EC] bg-white p-4 shadow-sm sm:p-5 md:p-7">
+          <div className="mb-5 flex items-center gap-3 px-1">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFEAD5] md:h-[50px] md:w-[50px]">
               <Image
                 src="/sms.svg"
@@ -385,56 +568,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Slider */}
-      <div className="relative w-full h-[100px] sm:h-[147px] bg-[#FB6514] rounded-tl-4xl rounded-br-4xl overflow-hidden">
-        <div className="absolute top-6 sm:top-8 left-0 w-full h-[52px] sm:h-[63px] bg-white -rotate-2 md:-rotate-[1.9deg] z-10 flex items-center overflow-hidden">
-          <div className="hidden sm:flex marquee gap-8 w-max">
-            {[...skills, ...skills].map((skill, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-5 text-[#000000] text-[48px] whitespace-nowrap"
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 35 35"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
-                    fill="#FD853A"
-                  />
-                </svg>
-                {skill}
-              </div>
-            ))}
-          </div>
-          <div className="flex sm:hidden w-full justify-center gap-4 overflow-hidden px-6">
-            {skills.slice(0, 2).map((skill, index) => (
-              <div
-                key={index}
-                className="flex shrink-0 items-center gap-2 text-[#000000] text-[22px] whitespace-nowrap"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 35 35"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.4828 0.257982L21.715 12.3411L34.2082 16.5003L22.1251 21.7324L17.9659 34.2256L12.7337 22.1425L0.240553 17.9833L12.3237 12.7512L16.4828 0.257982Z"
-                    fill="#FD853A"
-                  />
-                </svg>
-                {skill}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Blog */}
       <section id="blog" className="flex flex-col w-full h-fit items-center gap-8 sm:gap-12 px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[90px] overflow-hidden">
         <Reveal className="w-full max-w-[1298px] h-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-0">
@@ -443,7 +576,7 @@ export default function Home() {
             See All
           </Link>
         </Reveal>
-        <HomeBlogSlider fallback={blogs} />
+        <HomeBlogSlider />
       </section>
 
     </div>

@@ -87,14 +87,14 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
   }
 
   return (
-    <form onSubmit={submit} className="grid w-full gap-3">
-      <div className="grid gap-3 sm:grid-cols-[0.8fr_1fr]">
+    <form onSubmit={submit} className="grid w-full gap-4">
+      <div className="grid gap-4 sm:grid-cols-[0.8fr_1fr]">
         <input
           type="text"
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Name"
-          className="w-full rounded-full bg-[#F9FAFB] px-5 py-3 text-base text-[#1D2939] outline-none placeholder:text-[#667085] focus:ring-2 focus:ring-[#FD853A]/30"
+          className="w-full rounded-full bg-[#F9FAFB] px-5 py-4 text-base text-[#1D2939] outline-none transition-all duration-300 placeholder:text-[#667085] focus:bg-white focus:shadow-[0_12px_32px_rgba(253,133,58,0.12)] focus:ring-2 focus:ring-[#FD853A]/35"
           disabled={saving}
         />
         <input
@@ -102,7 +102,7 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email Address"
-          className="w-full rounded-full bg-[#F9FAFB] px-5 py-3 text-base text-[#1D2939] outline-none placeholder:text-[#667085] focus:ring-2 focus:ring-[#FD853A]/30"
+          className="w-full rounded-full bg-[#F9FAFB] px-5 py-4 text-base text-[#1D2939] outline-none transition-all duration-300 placeholder:text-[#667085] focus:bg-white focus:shadow-[0_12px_32px_rgba(253,133,58,0.12)] focus:ring-2 focus:ring-[#FD853A]/35"
           disabled={saving}
           required
         />
@@ -112,7 +112,7 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
         value={messageText}
         onChange={(event) => setMessageText(event.target.value)}
         placeholder="Tell me about your project"
-        className="min-h-[132px] w-full resize-none rounded-[24px] bg-[#F9FAFB] px-5 py-4 text-base leading-relaxed text-[#1D2939] outline-none placeholder:text-[#667085] focus:ring-2 focus:ring-[#FD853A]/30"
+        className="min-h-[170px] w-full resize-none rounded-[28px] bg-[#F9FAFB] px-5 py-5 text-base leading-relaxed text-[#1D2939] outline-none transition-all duration-300 placeholder:text-[#667085] focus:bg-white focus:shadow-[0_12px_32px_rgba(253,133,58,0.12)] focus:ring-2 focus:ring-[#FD853A]/35"
         disabled={saving}
         required
       />

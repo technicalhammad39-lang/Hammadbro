@@ -40,7 +40,7 @@ export function GenericSlider<T extends AllowedCard>({
   const isReview = cardType === 'review';
   const isPortfolio = cardType === 'portfolio';
   const isBlog = cardType === 'blog';
-  const shouldLoop = isReview ? data.length > 1 : data.length > slidesPerView * 2;
+  const shouldLoop = isReview || cardType === 'hover' ? data.length > 1 : data.length > slidesPerView * 2;
 
   useEffect(() => {
     setIsClient(true);
@@ -105,14 +105,17 @@ export function GenericSlider<T extends AllowedCard>({
       <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
         <Swiper
           modules={[Pagination, Autoplay]}
-          spaceBetween={20}
+          spaceBetween={cardType === 'hover' ? 14 : 20}
           centeredSlides={false}
           loop={shouldLoop}
           autoplay={{
-            delay: 3000,
+            delay: cardType === 'hover' ? 2400 : 3000,
             disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
+          speed={cardType === 'hover' ? 850 : 650}
           pagination={{ clickable: true }}
+          grabCursor
           breakpoints={{
             0: {
               slidesPerView: isPortfolio ? 1 : 1,
@@ -123,19 +126,19 @@ export function GenericSlider<T extends AllowedCard>({
               spaceBetween: 18,
             },
             850: {
-              slidesPerView: isPortfolio || isBlog || isReview ? 1 : 2,
+              slidesPerView: isPortfolio || isBlog || isReview ? 1 : cardType === 'hover' ? 3 : 2,
               spaceBetween: 20,
             },
             1024: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : Math.min(slidesPerView, 3),
-              spaceBetween: 24,
+              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? 4 : Math.min(slidesPerView, 3),
+              spaceBetween: cardType === 'hover' ? 18 : 24,
             },
             1280: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : slidesPerView,
-              spaceBetween: 24,
+              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? Math.max(slidesPerView, 5) : slidesPerView,
+              spaceBetween: cardType === 'hover' ? 18 : 24,
             },
           }}
-          className="!pb-12 sm:!pb-16"
+          className={cardType === 'hover' ? '!pb-10' : '!pb-12 sm:!pb-16'}
         >
           {data.map((item, index) => (
             <SwiperSlide

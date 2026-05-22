@@ -301,6 +301,186 @@ select {
   transition: all 0.3s ease-in-out !important;
 }
 
+.premium-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.premium-cta::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -2;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, #fd853a, #ffb16f, #171717, #fd853a);
+  animation: cta-gradient-spin 4.8s linear infinite;
+}
+
+.premium-cta::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(110deg, #fd853a, #ff9b52 45%, #fd853a);
+  background-size: 180% 180%;
+  animation: cta-gradient-shift 5.5s ease-in-out infinite;
+}
+
+.premium-cta-outline {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.premium-cta-outline::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -2;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg, #171717, #fd853a, #171717);
+  opacity: 0.65;
+  animation: cta-gradient-spin 6s linear infinite;
+}
+
+.premium-cta-outline::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: #fff;
+  transition: background 0.28s ease;
+}
+
+.premium-cta-outline:hover::after,
+.premium-cta-outline:active::after {
+  background: #171717;
+}
+
+.cta-arrow-stack {
+  position: relative;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  overflow: hidden;
+  transform: rotate(-35deg);
+}
+
+.cta-arrow-stack svg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.32s ease, opacity 0.32s ease;
+}
+
+.cta-arrow-stack svg:nth-child(2) {
+  transform: translate(-65%, 65%);
+  opacity: 0;
+}
+
+.group:hover .cta-arrow-stack svg:first-child,
+.group:active .cta-arrow-stack svg:first-child {
+  transform: translate(65%, -65%);
+  opacity: 0;
+}
+
+.group:hover .cta-arrow-stack svg:nth-child(2),
+.group:active .cta-arrow-stack svg:nth-child(2) {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+
+.timeline-flow-line {
+  background-image: linear-gradient(to bottom, #fd853a 0 46%, transparent 46% 100%);
+  background-size: 2px 14px;
+  background-repeat: repeat-y;
+  animation: timeline-flow 1.8s linear infinite;
+}
+
+.stat-number-glow {
+  animation: stat-number-glow 3.2s ease-in-out infinite;
+}
+
+.premium-dark-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.premium-dark-hero::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(253, 133, 58, 0.28), transparent 28%),
+    radial-gradient(circle at 78% 70%, rgba(255, 255, 255, 0.1), transparent 24%),
+    linear-gradient(120deg, rgba(253, 133, 58, 0.08), transparent 42%, rgba(253, 133, 58, 0.12));
+  animation: dark-hero-glow 9s ease-in-out infinite alternate;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes cta-gradient-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cta-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes timeline-flow {
+  from {
+    background-position-y: 0;
+  }
+
+  to {
+    background-position-y: 14px;
+  }
+}
+
+@keyframes stat-number-glow {
+  0%,
+  100% {
+    color: #1d2939;
+    text-shadow: 0 0 0 rgba(253, 133, 58, 0);
+  }
+
+  50% {
+    color: #fd853a;
+    text-shadow: 0 0 18px rgba(253, 133, 58, 0.28);
+  }
+}
+
+@keyframes dark-hero-glow {
+  from {
+    transform: translate3d(-2%, -1%, 0) rotate(0deg);
+    opacity: 0.82;
+  }
+
+  to {
+    transform: translate3d(2%, 1%, 0) rotate(8deg);
+    opacity: 1;
+  }
+}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -330,6 +510,11 @@ select {
     white-space: normal;
   }
 
+  .premium-cta,
+  .premium-cta-outline {
+    box-shadow: 0 10px 28px rgba(253, 133, 58, 0.22);
+  }
+
   .swiper-pagination-bullet {
     width: 10px !important;
     height: 10px !important;
@@ -350,7 +535,13 @@ select {
   .hero-load-stats,
   .hero-load-portrait,
   .hero-load-buttons,
-  .hero-load-shape {
+  .hero-load-shape,
+  .premium-cta::before,
+  .premium-cta::after,
+  .premium-cta-outline::before,
+  .timeline-flow-line,
+  .stat-number-glow,
+  .premium-dark-hero::before {
     animation: none !important;
   }
 
