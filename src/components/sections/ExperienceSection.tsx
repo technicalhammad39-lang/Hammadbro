@@ -1,0 +1,91 @@
+"use client";
+
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { Fragment, useEffect, useState } from "react";
+import Reveal from "@/components/ui/Reveal";
+import CustomeText from "@/components/ui/CustomeText";
+import { Experience } from "@/data/data";
+import { experienceDocToExperience, WorkExperienceDoc } from "@/lib/content-types";
+import { db } from "@/lib/firebase";
+
+export default function ExperienceSection({ fallback }: { fallback: Experience[] }) {
+  const [items, setItems] = useState<Experience[]>(fallback);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(collection(db, "workExperience"), where("status", "==", "published"), orderBy("order", "asc")),
+      (snapshot) => {
+        const firestoreItems = snapshot.docs.map((doc) => experienceDocToExperience({ id: doc.id, ...doc.data() } as WorkExperienceDoc));
+        setItems(firestoreItems.length ? firestoreItems : fallback);
+      },
+      (error) => {
+        console.error("Experience realtime listener failed:", error);
+        setItems(fallback);
+      },
+    );
+
+    return unsubscribe;
+  }, [fallback]);
+
+  return (
+    <section className="w-full min-h-0 flex flex-col items-start mx-auto px-5 sm:px-6 lg:px-[71px] py-10 lg:py-14">
+      <Reveal className="w-full h-auto flex flex-wrap lg:flex-row items-start justify-center gap-x-2.5 mb-6 lg:mb-6 text-center lg:text-left">
+        <CustomeText title="My" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#344054]" />
+        <CustomeText title="Work" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
+        <CustomeText title="Experience" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
+      </Reveal>
+
+      <div className="w-full lg:hidden">
+        {items.map((exp) => (
+          <div key={`${exp.company}-${exp.role}`} className="mb-8 last:mb-0">
+            <div className="flex items-start gap-4">
+              <div className="relative flex-shrink-0 mt-2">
+                <div className="w-6 h-6 rounded-full border-2 border-dashed border-[#1D2939] bg-white" />
+                <div className={`absolute top-1 left-1 w-4 h-4 rounded-full ${exp.dotColor}`} />
+              </div>
+
+              <div className="flex-1">
+                <CustomeText title={exp.company} className="font-semibold text-[#1D2939] text-[20px] sm:text-[24px] mb-1" />
+                <CustomeText title={exp.duration} className="text-[#98A2B3] text-[14px] sm:text-[16px] mb-2" />
+                <CustomeText title={exp.role} className="font-semibold text-[#1D2939] text-[18px] sm:text-[20px] mb-2" />
+                {exp.desc && (
+                  <CustomeText title={exp.desc} className="text-[#98A2B3] text-[14px] sm:text-[16px] leading-relaxed" />
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Reveal className="hidden w-full justify-center lg:flex">
+        <div className="grid w-full max-w-[1210px] grid-cols-[minmax(300px,420px)_64px_minmax(440px,560px)] gap-x-8 gap-y-8">
+          {items.map((exp, index) => (
+            <Fragment key={`${exp.company}-${exp.role}`}>
+              <div className="flex min-h-[132px] flex-col gap-3">
+                <CustomeText title={exp.company} className="font-semibold text-[#1D2939] text-[30px] xl:text-[36px] leading-tight" />
+                <CustomeText title={exp.duration} className="text-lg xl:text-xl text-[#98A2B3]" />
+              </div>
+
+              <div className="relative flex justify-center pt-1">
+                {index < items.length - 1 && (
+                  <div className="absolute left-1/2 top-7 -bottom-11 w-[2px] -translate-x-1/2 border-l-2 border-dashed border-[#1D2939]" />
+                )}
+                <div className="relative flex h-12 w-12 items-center justify-center">
+                  <div className="absolute h-12 w-12 rounded-full border-2 border-dashed border-[#1D2939] bg-white" />
+                  <div className={`z-10 h-9 w-9 rounded-full ${exp.dotColor}`} />
+                </div>
+              </div>
+
+              <div className="flex min-h-[132px] flex-col gap-3">
+                <CustomeText title={exp.role} className="font-semibold text-[#1D2939] text-[30px] xl:text-[36px] leading-tight" />
+                {exp.desc && (
+                  <CustomeText title={exp.desc} className="text-base xl:text-lg leading-relaxed text-[#98A2B3]" />
+                )}
+              </div>
+            </Fragment>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
