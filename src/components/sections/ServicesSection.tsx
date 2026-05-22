@@ -42,9 +42,9 @@ export default function ServicesSection() {
 
   if (loading) {
     return (
-      <div className="grid w-full place-items-center gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid w-full place-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="h-[350px] w-[82vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[310px] sm:w-full sm:max-w-[300px] lg:h-[285px] lg:max-w-[270px] xl:h-[270px] xl:max-w-[255px]" />
+          <div key={index} className="h-[355px] w-[86vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[350px] sm:w-full sm:max-w-[340px] lg:h-[360px] lg:max-w-[330px] xl:h-[368px] xl:max-w-[340px]" />
         ))}
       </div>
     );
@@ -57,7 +57,7 @@ export default function ServicesSection() {
   return (
     <GenericSlider
       data={items}
-      slidesPerView={5}
+      slidesPerView={4}
       heightClass="h-auto"
       cardType="hover"
     />

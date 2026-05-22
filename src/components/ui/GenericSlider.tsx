@@ -111,7 +111,7 @@ export function GenericSlider<T extends AllowedCard>({
       <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
         <Swiper
           modules={[Pagination, Autoplay]}
-          spaceBetween={cardType === 'hover' ? 14 : 20}
+          spaceBetween={cardType === 'hover' ? 18 : 20}
           centeredSlides={false}
           loop={shouldLoop}
           autoplay={{
@@ -132,16 +132,16 @@ export function GenericSlider<T extends AllowedCard>({
               spaceBetween: 18,
             },
             850: {
-              slidesPerView: isPortfolio || isBlog || isReview ? 1 : cardType === 'hover' ? 3 : 2,
+              slidesPerView: isPortfolio || isBlog || isReview ? 1 : cardType === 'hover' ? 2 : 2,
               spaceBetween: 20,
             },
             1024: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? 4 : Math.min(slidesPerView, 3),
-              spaceBetween: cardType === 'hover' ? 18 : 24,
+              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? 3 : Math.min(slidesPerView, 3),
+              spaceBetween: cardType === 'hover' ? 22 : 24,
             },
             1280: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? Math.max(slidesPerView, 5) : slidesPerView,
-              spaceBetween: cardType === 'hover' ? 18 : 24,
+              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? Math.min(Math.max(slidesPerView, 3), 4) : slidesPerView,
+              spaceBetween: cardType === 'hover' ? 24 : 24,
             },
           }}
           className={cardType === 'hover' ? '!pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
