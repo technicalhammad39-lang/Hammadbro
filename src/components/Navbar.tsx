@@ -3,17 +3,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const menuItems = [
     { label: "Home", href: "/#home", sectionId: "home" },
     { label: "About", href: "/#about", sectionId: "about" },
     { label: "Service", href: "/#services", sectionId: "services" },
     { label: "Resume", href: "/HammadGfx-CV.pdf", download: true },
-    { label: "Project", href: "/#projects", sectionId: "projects" },
+    { label: "Portfolio", href: "/work" },
     { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 const Navbar = () => {
+    const pathname = usePathname();
     const [selected, setSelected] = useState("Home");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(true);
@@ -83,6 +85,11 @@ const Navbar = () => {
     }, []);
 
     useEffect(() => {
+        if (pathname === "/work" || pathname.startsWith("/portfolio")) {
+            setSelected("Portfolio");
+            return;
+        }
+
         const sectionItems = menuItems.filter((item) => item.sectionId);
         const sections = sectionItems
             .map((item) => ({ ...item, element: document.getElementById(item.sectionId!) }))
@@ -116,7 +123,7 @@ const Navbar = () => {
         sections.forEach((item) => observer.observe(item.element));
 
         return () => observer.disconnect();
-    }, []);
+    }, [pathname]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);

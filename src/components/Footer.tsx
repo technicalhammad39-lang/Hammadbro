@@ -14,7 +14,7 @@ const Footer = () => {
         { label: "About", href: "/#about" },
         { label: "Service", href: "/#services" },
         { label: "Resume", href: "/HammadGfx-CV.pdf", download: true },
-        { label: "Project", href: "/portfolio" },
+        { label: "Portfolio", href: "/work" },
         { label: "Blog", href: "/blog" },
         { label: "Contact", href: "/#contact" },
     ];

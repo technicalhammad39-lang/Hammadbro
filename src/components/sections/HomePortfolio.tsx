@@ -84,7 +84,7 @@ export default function HomePortfolio() {
 
             {isLast && (
               <div className="-mt-8 flex justify-center">
-                <Link href="/portfolio" className="relative z-10 rounded-full border border-white/40 bg-[#171717]/70 px-7 py-3.5 text-base font-semibold text-white shadow-2xl backdrop-blur-md transition-colors hover:bg-[#FD853A]">
+                <Link href="/work" className="relative z-10 rounded-full border border-white/40 bg-[#171717]/70 px-7 py-3.5 text-base font-semibold text-white shadow-2xl backdrop-blur-md transition-colors hover:bg-[#FD853A]">
                   See More Work
                 </Link>
               </div>

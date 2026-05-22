@@ -317,7 +317,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Link href="/portfolio" className="flex h-[52px] w-[118px] shrink-0 items-center justify-center rounded-[60px] bg-[#FD853A] px-6 py-3 text-base font-bold text-white transition-all hover:bg-[#e46e24] sm:h-[60px] sm:w-[144px] sm:text-[18px]">
+          <Link href="/work" className="flex h-[52px] w-[118px] shrink-0 items-center justify-center rounded-[60px] bg-[#FD853A] px-6 py-3 text-base font-bold text-white transition-all hover:bg-[#e46e24] sm:h-[60px] sm:w-[144px] sm:text-[18px]">
             See All
           </Link>
         </Reveal>

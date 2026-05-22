@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/next';
 import NotificationBanner from "@/components/NotificationBanner";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
             {children}
             <Analytics />
             <Footer/>
+            <ScrollToTopButton />
           </div>
         </SmoothScrollProvider>
       </body>

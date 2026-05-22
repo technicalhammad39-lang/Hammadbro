@@ -1,62 +1,85 @@
-"use client";
-
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { GenericSlider } from "@/components/ui/GenericSlider";
 import { CardData } from "@/data/data";
-import { ServiceDoc } from "@/lib/content-types";
-import { db } from "@/lib/firebase";
 
-const serviceIconFallback: CardData["icon"] = "Palette";
-
-function serviceToCard(service: ServiceDoc): CardData {
-  return {
-    title: service.title,
-    desc: service.shortDescription,
-    imageSrc: service.imageUrl,
-    icon: service.icon || serviceIconFallback,
-  };
-}
+const staticServices: CardData[] = [
+  {
+    title: "Logo Design",
+    desc: "Clean and memorable logos for strong first impressions.",
+    imageSrc: "/Frame%2026.svg",
+    icon: "PenTool",
+  },
+  {
+    title: "Brand Identity Design",
+    desc: "Logo, colors, typography, and complete visual direction.",
+    imageSrc: "/Frame%2077.svg",
+    icon: "Palette",
+  },
+  {
+    title: "Social Media Design",
+    desc: "Posts, ads, banners, covers, carousels, and campaign creatives.",
+    imageSrc: "/Frame%2060.svg",
+    icon: "Share2",
+  },
+  {
+    title: "Print Design",
+    desc: "Flyers, posters, brochures, business cards, and print-ready layouts.",
+    imageSrc: "/Rectangle%206.svg",
+    icon: "Printer",
+  },
+  {
+    title: "Business Profile Design",
+    desc: "Company profiles, pitch decks, portfolios, and corporate layouts.",
+    imageSrc: "/Frame%2026.svg",
+    icon: "FileText",
+  },
+  {
+    title: "Website Graphics",
+    desc: "Hero banners, thumbnails, icons, web sections, and digital visuals.",
+    imageSrc: "/Rectangle%206%20%281%29.svg",
+    icon: "Monitor",
+  },
+  {
+    title: "YouTube Thumbnails",
+    desc: "High-click thumbnails with bold layouts and clear visual hierarchy.",
+    imageSrc: "/Rectangle%207.svg",
+    icon: "Monitor",
+  },
+  {
+    title: "Banner & Flex Design",
+    desc: "Shop boards, roll-ups, flex, event banners, and outdoor graphics.",
+    imageSrc: "/Frame%2077.svg",
+    icon: "Printer",
+  },
+  {
+    title: "Packaging & Label Design",
+    desc: "Product labels, boxes, stickers, and packaging visuals.",
+    imageSrc: "/Rectangle%206.svg",
+    icon: "Palette",
+  },
+  {
+    title: "Brochure & Catalog Design",
+    desc: "Product catalogs, company brochures, menus, and multi-page layouts.",
+    imageSrc: "/Frame%2026.svg",
+    icon: "FileText",
+  },
+  {
+    title: "Photo Editing",
+    desc: "Retouching, background cleanup, product edits, and polished visuals.",
+    imageSrc: "/pic.webp",
+    icon: "Palette",
+  },
+  {
+    title: "Vector Tracing",
+    desc: "Clean vector redraws for logos, icons, print files, and brand assets.",
+    imageSrc: "/Property%201%3DDefault.svg",
+    icon: "PenTool",
+  },
+];
 
 export default function ServicesSection() {
-  const [items, setItems] = useState<CardData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      query(collection(db, "services"), where("status", "==", "published"), orderBy("order", "asc")),
-      (snapshot) => {
-        const services = snapshot.docs.map((item) => serviceToCard({ id: item.id, ...item.data() } as ServiceDoc));
-        setItems(services);
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Services realtime listener failed:", error);
-        setItems([]);
-        setLoading(false);
-      },
-    );
-
-    return unsubscribe;
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="grid w-full place-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div key={index} className="h-[352px] w-[86vw] max-w-[360px] animate-pulse rounded-[26px] bg-white/10 sm:h-[356px] sm:w-full sm:max-w-[340px] lg:h-[370px] lg:max-w-[330px] xl:h-[382px] xl:max-w-[340px]" />
-        ))}
-      </div>
-    );
-  }
-
-  if (items.length === 0) {
-    return <div className="rounded-[24px] bg-white/10 px-6 py-5 text-center font-semibold text-white/70">Services will appear here soon.</div>;
-  }
-
   return (
     <GenericSlider
-      data={items}
+      data={staticServices}
       slidesPerView={4}
       heightClass="h-auto"
       cardType="hover"
