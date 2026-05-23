@@ -12,9 +12,19 @@ export default function BlogGrid({ limitCount }: { limitCount?: number }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let settled = false;
+    const failOpenTimer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        setLoading(false);
+      }
+    }, 5500);
+
     const unsubscribe = onSnapshot(
       query(collection(db, "blogs"), where("status", "==", "published"), orderBy("createdAt", "desc")),
       (snapshot) => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         let items = snapshot.docs.map((doc) => blogDocToBlog({ id: doc.id, ...doc.data() } as BlogDoc));
 
         if (limitCount) {
@@ -24,14 +34,18 @@ export default function BlogGrid({ limitCount }: { limitCount?: number }) {
         setBlogs(items);
         setLoading(false);
       },
-      (error) => {
-        console.error("Blog grid realtime listener failed:", error);
+      () => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         setBlogs([]);
         setLoading(false);
       },
     );
 
-    return unsubscribe;
+    return () => {
+      window.clearTimeout(failOpenTimer);
+      unsubscribe();
+    };
   }, [limitCount]);
 
   if (loading) {

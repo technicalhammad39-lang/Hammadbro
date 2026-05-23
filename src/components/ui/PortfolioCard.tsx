@@ -1,9 +1,11 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import ArrowButton from './ArrowButton';
 import { PortfolioItem } from '@/data/data';
 import { normalizeImageUrl } from '@/lib/image-url';
+import ProjectCategoryBadge from './ProjectCategoryBadge';
 
 interface PortfolioCardProps extends Pick<PortfolioItem, 'image' | 'title' | 'href' | 'desc'> {
   category?: string;
@@ -35,15 +37,18 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc,
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }}
     >
-      <img
+      <Image
         src={normalizeImageUrl(image)}
         alt={title}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 633px"
         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
+        priority={priority}
+        unoptimized
       />
 
       <div className="absolute inset-0 z-10 bg-black/0 transition-colors duration-500 ease-out md:group-hover:bg-black/55 md:group-focus-visible:bg-black/55" />
+      <ProjectCategoryBadge category={category} className="absolute left-3 top-3 z-20 sm:left-4 sm:top-4" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black/40 to-transparent opacity-80 md:opacity-0 md:transition-opacity md:duration-500 md:group-hover:opacity-100" />
 
       <div className="absolute bottom-3 right-3 z-20 flex items-center gap-2 rounded-full bg-[#FD853A] px-4 py-2 text-sm font-semibold text-white shadow-lg md:hidden">

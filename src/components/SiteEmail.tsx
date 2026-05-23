@@ -22,8 +22,7 @@ export default function SiteEmail({ className = "", prefix = "" }: { className?:
         const settings = snapshot.data() as Partial<SiteSettingsDoc>;
         setEmail(settings.email || fallbackEmail);
       },
-      (error) => {
-        console.error("Site settings email listener failed:", error);
+      () => {
         setEmail(fallbackEmail);
       },
     );

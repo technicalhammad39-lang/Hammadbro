@@ -55,16 +55,39 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: "Project Not Found | Hammad GFX",
+      title: "Project Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const image = project.mainImage ? normalizeImageUrl(project.mainImage) : "/logo.webp";
+
   return {
-    title: `${project.title} | Hammad GFX Portfolio`,
+    title: `${project.title} Portfolio`,
     description: project.shortDescription,
+    alternates: {
+      canonical: `/portfolio/${slug}`,
+    },
     openGraph: {
       title: `${project.title} | Hammad GFX`,
       description: project.shortDescription,
+      url: `/portfolio/${slug}`,
+      type: "article",
+      images: [
+        {
+          url: image,
+          alt: `${project.title} by Hammad GFX`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Hammad GFX Portfolio`,
+      description: project.shortDescription,
+      images: [image],
     },
   };
 }

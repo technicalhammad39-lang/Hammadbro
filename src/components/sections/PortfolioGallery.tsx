@@ -2,46 +2,65 @@
 
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { portfolioCategories } from "@/data/data";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { normalizeImageUrl } from "@/lib/image-url";
+import ProjectCategoryBadge from "@/components/ui/ProjectCategoryBadge";
 
-export default function PortfolioGallery({ initialCategory = "All" }: { initialCategory?: string }) {
-  const [projects, setProjects] = useState<PortfolioProjectDoc[]>([]);
+export default function PortfolioGallery({
+  initialCategory = "All",
+  initialProjects = [],
+}: {
+  initialCategory?: string;
+  initialProjects?: PortfolioProjectDoc[];
+}) {
+  const [projects, setProjects] = useState<PortfolioProjectDoc[]>(initialProjects);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(initialProjects.length === 0);
 
   useEffect(() => {
+    let settled = false;
+    const failOpenTimer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        setLoading(false);
+      }
+    }, 5500);
+
     const unsubscribe = onSnapshot(
       query(collection(db, "portfolioProjects"), where("status", "==", "published"), orderBy("order", "asc")),
       (snapshot) => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as PortfolioProjectDoc[];
         setProjects(items);
         setLoading(false);
       },
-      (error) => {
-        console.error("Portfolio realtime listener failed:", error);
-        setProjects([]);
+      () => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
+        setProjects((currentProjects) => currentProjects);
         setLoading(false);
       },
     );
 
-    return unsubscribe;
+    return () => {
+      window.clearTimeout(failOpenTimer);
+      unsubscribe();
+    };
   }, []);
 
-  const categories = useMemo(() => {
-    const dynamicCategories = Array.from(new Set(projects.map((project) => project.category).filter(Boolean)));
-    return Array.from(new Set(["All", ...portfolioCategories.filter((category) => category !== "All"), ...dynamicCategories]));
-  }, [projects]);
+  const categories = portfolioCategories;
 
   const visibleProjects = activeCategory === "All" ? projects : projects.filter((project) => project.category === activeCategory);
 
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
       <div
-        className="hide-scrollbar -mx-5 flex snap-x snap-mandatory flex-nowrap gap-3 overflow-x-auto scroll-smooth px-5 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
+        data-portfolio-filter-row
+        className="hide-scrollbar flex w-full snap-x snap-proximity flex-nowrap gap-2.5 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-2 sm:gap-3 lg:justify-center"
         data-lenis-prevent-touch
         data-lenis-prevent-wheel
       >
@@ -50,7 +69,7 @@ export default function PortfolioGallery({ initialCategory = "All" }: { initialC
             key={category}
             type="button"
             onClick={() => setActiveCategory(category)}
-            className={`snap-start whitespace-nowrap rounded-full px-5 py-3 text-sm font-semibold transition-all duration-300 sm:text-base ${activeCategory === category ? "bg-[#FD853A] text-white shadow-[0_10px_24px_rgba(253,133,58,0.22)]" : "bg-[#F2F4F7] text-[#171717] hover:bg-[#171717] hover:text-white"}`}
+            className={`min-h-11 flex-none snap-start whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold leading-none transition-all duration-300 sm:min-h-12 sm:px-5 sm:text-base ${activeCategory === category ? "bg-[#FD853A] text-white shadow-[0_10px_24px_rgba(253,133,58,0.22)]" : "bg-[#F2F4F7] text-[#171717] hover:bg-[#171717] hover:text-white"}`}
           >
             {category}
           </button>
@@ -70,7 +89,7 @@ export default function PortfolioGallery({ initialCategory = "All" }: { initialC
       )}
 
       {!loading && <div className="columns-1 gap-6 md:columns-2 xl:columns-3">
-        {visibleProjects.map((project, index) => (
+        {visibleProjects.map((project) => (
           <Link
             key={project.slug}
             href={`/portfolio/${project.slug}`}
@@ -81,9 +100,10 @@ export default function PortfolioGallery({ initialCategory = "All" }: { initialC
                 src={normalizeImageUrl(project.mainImageUrl)}
                 alt={project.title}
                 className="h-auto w-full"
-                loading={index < 3 ? "eager" : "lazy"}
+                loading="lazy"
                 decoding="async"
               />
+              <ProjectCategoryBadge category={project.category} className="absolute left-3 top-3 z-20 sm:left-4 sm:top-4" />
               <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/45" />
               <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A]">{project.category}</p>

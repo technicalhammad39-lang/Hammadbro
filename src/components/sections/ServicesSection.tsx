@@ -35,7 +35,7 @@ const staticServices: CardData[] = [
   {
     title: "Website Graphics",
     desc: "Hero banners, thumbnails, icons, web sections, and digital visuals.",
-    imageSrc: "/Rectangle%206%20%281%29.svg",
+    imageSrc: "/Rectangle%206%20(1).svg",
     icon: "Monitor",
   },
   {

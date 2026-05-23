@@ -12,21 +12,35 @@ export default function HomeBlogSlider() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let settled = false;
+    const failOpenTimer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        setLoading(false);
+      }
+    }, 5500);
+
     const unsubscribe = onSnapshot(
       query(collection(db, "blogs"), where("status", "==", "published"), orderBy("createdAt", "desc")),
       (snapshot) => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         const items = snapshot.docs.map((doc) => blogDocToBlog({ id: doc.id, ...doc.data() } as BlogDoc)).slice(0, 6);
         setBlogs(items);
         setLoading(false);
       },
-      (error) => {
-        console.error("Home blog realtime listener failed:", error);
+      () => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         setBlogs([]);
         setLoading(false);
       },
     );
 
-    return unsubscribe;
+    return () => {
+      window.clearTimeout(failOpenTimer);
+      unsubscribe();
+    };
   }, []);
 
   if (loading) {

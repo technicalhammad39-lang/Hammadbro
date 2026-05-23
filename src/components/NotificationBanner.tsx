@@ -21,8 +21,7 @@ export default function NotificationBanner() {
           setNotification(null);
         }
       },
-      (error) => {
-        console.error("Notifications realtime listener failed:", error);
+      () => {
         setNotification(null);
       },
     );

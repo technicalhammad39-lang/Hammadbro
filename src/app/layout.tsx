@@ -20,8 +20,62 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hammad GFX | Professional Visual Designer",
-  description: "Premium logos, brand identities, social media designs, and marketing visuals by Hammad GFX.",
+  metadataBase: new URL("https://hammadgfx.online"),
+  title: {
+    default: "Hammad GFX | Professional Graphic Designer Portfolio",
+    template: "%s | Hammad GFX",
+  },
+  description:
+    "Hammad GFX is a professional graphic designer portfolio showcasing logo design, brand identity, social media posts, print design, banners, thumbnails, and creative marketing visuals.",
+  keywords: [
+    "graphic designer Pakistan",
+    "logo designer",
+    "brand identity designer",
+    "social media post designer",
+    "print design",
+    "banner design",
+    "YouTube thumbnail designer",
+    "Hammad GFX",
+    "freelance graphic designer",
+  ],
+  alternates: {
+    canonical: "https://hammadgfx.online",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    title: "Hammad GFX | Professional Graphic Designer Portfolio",
+    description:
+      "Logo design, brand identity, social media posts, print design, banners, thumbnails, and creative marketing visuals by Hammad GFX.",
+    url: "https://hammadgfx.online",
+    siteName: "Hammad GFX",
+    images: [
+      {
+        url: "/logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Hammad GFX professional graphic designer portfolio",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hammad GFX | Professional Graphic Designer Portfolio",
+    description:
+      "Professional logo design, brand identity, social media, print, banner, thumbnail, and marketing visuals.",
+    images: ["/logo.webp"],
+  },
 };
 
 export default function RootLayout({
@@ -39,7 +93,7 @@ export default function RootLayout({
           <div className="w-full max-w-full overflow-x-hidden">
             <NotificationBanner />
             {children}
-            <Analytics />
+            {process.env.VERCEL ? <Analytics /> : null}
             <Footer/>
             <ScrollToTopButton />
           </div>

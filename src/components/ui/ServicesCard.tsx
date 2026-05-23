@@ -1,4 +1,5 @@
 import { FileText, Monitor, Palette, PenTool, Printer, Share2 } from 'lucide-react';
+import Image from 'next/image';
 import { normalizeImageUrl } from '@/lib/image-url';
 
 const serviceIcons = {
@@ -38,12 +39,15 @@ export default function ServicesCard({ title, desc, icon, imageSrc, priority = f
       <div className="relative z-10 mt-3 flex flex-col gap-2.5 sm:mt-3">
         {imageSrc && (
           <div className="flex h-[180px] items-center justify-center overflow-hidden rounded-[20px] sm:h-[166px] lg:h-[176px] xl:h-[188px]">
-            <img
+            <Image
               src={normalizeImageUrl(imageSrc)}
               alt={title}
+              width={640}
+              height={380}
+              sizes="(max-width: 640px) 86vw, 340px"
               className="h-full w-full rounded-[20px] object-cover"
-              loading={priority ? "eager" : "lazy"}
-              decoding="async"
+              priority={priority}
+              unoptimized
             />
           </div>
         )}

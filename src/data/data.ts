@@ -162,7 +162,7 @@ export const blogs: Blog[] = [
     ],
   },
   {
-    image: "/Rectangle%206%20%281%29.svg",
+    image: "/Rectangle%206%20(1).svg",
     button: "Read More",
     name: "Hammad GFX",
     date: "17 May, 2026",
@@ -243,7 +243,7 @@ export const portfolioData: PortfolioItem[] = [
     result: "The profile became easier to share with clients and helped the business communicate with more confidence.",
   },
   {
-    image: "/Rectangle%206%20%281%29.svg",
+    image: "/Rectangle%206%20(1).svg",
     title: "Restaurant Menu Design",
     href: "/portfolio/restaurant-menu-design",
     slug: "restaurant-menu-design",
@@ -345,7 +345,7 @@ export const cardData: CardData[] = [
   {
     title: "Website Graphics",
     desc: "Hero banners, icons, thumbnails, and digital visuals.",
-    imageSrc: "/Rectangle%206%20%281%29.svg",
+    imageSrc: "/Rectangle%206%20(1).svg",
     icon: "Monitor",
   },
   {

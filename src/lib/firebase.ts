@@ -12,14 +12,6 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
-  console.log(
-    "[Firebase] NEXT_PUBLIC_FIREBASE_API_KEY exists:",
-    typeof process.env.NEXT_PUBLIC_FIREBASE_API_KEY !== "undefined" &&
-      process.env.NEXT_PUBLIC_FIREBASE_API_KEY.length > 0,
-  );
-}
-
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 export const db = getFirestore(

@@ -49,7 +49,6 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
       setStatus("Thanks! I'll get back to you soon.");
       setStatusType("success");
     } catch (error) {
-      console.error("Contact submit failed:", error);
       setStatus(getActionErrorMessage(error, "Message could not be sent. Please try again."));
       setStatusType("error");
     } finally {

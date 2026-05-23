@@ -36,16 +36,39 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return {
-      title: "Blog Post Not Found | Hammad GFX",
+      title: "Blog Post Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const image = post.image ? normalizeImageUrl(post.image) : "/logo.webp";
+
   return {
-    title: `${post.title} | Hammad GFX Blog`,
+    title: post.title,
     description: post.metaDescription,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title: `${post.title} | Hammad GFX`,
       description: post.metaDescription,
+      url: `/blog/${slug}`,
+      type: "article",
+      images: [
+        {
+          url: image,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | Hammad GFX Blog`,
+      description: post.metaDescription,
+      images: [image],
     },
   };
 }

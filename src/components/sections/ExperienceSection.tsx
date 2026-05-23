@@ -8,26 +8,40 @@ import { Experience } from "@/data/data";
 import { experienceDocToExperience, WorkExperienceDoc } from "@/lib/content-types";
 import { db } from "@/lib/firebase";
 
-export default function ExperienceSection() {
-  const [items, setItems] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function ExperienceSection({ initialItems = [] }: { initialItems?: Experience[] }) {
+  const [items, setItems] = useState<Experience[]>(initialItems);
+  const [loading, setLoading] = useState(initialItems.length === 0);
 
   useEffect(() => {
+    let settled = false;
+    const failOpenTimer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        setLoading(false);
+      }
+    }, 5500);
+
     const unsubscribe = onSnapshot(
       query(collection(db, "workExperience"), where("status", "==", "published"), orderBy("order", "asc")),
       (snapshot) => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         const firestoreItems = snapshot.docs.map((doc) => experienceDocToExperience({ id: doc.id, ...doc.data() } as WorkExperienceDoc));
         setItems(firestoreItems);
         setLoading(false);
       },
-      (error) => {
-        console.error("Experience realtime listener failed:", error);
-        setItems([]);
+      () => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
+        setItems((currentItems) => currentItems);
         setLoading(false);
       },
     );
 
-    return unsubscribe;
+    return () => {
+      window.clearTimeout(failOpenTimer);
+      unsubscribe();
+    };
   }, []);
 
   return (

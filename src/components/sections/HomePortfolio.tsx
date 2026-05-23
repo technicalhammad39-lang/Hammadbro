@@ -6,12 +6,21 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { normalizeImageUrl } from "@/lib/image-url";
+import ProjectCategoryBadge from "@/components/ui/ProjectCategoryBadge";
 
-export default function HomePortfolio() {
-  const [projects, setProjects] = useState<PortfolioProjectDoc[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function HomePortfolio({ initialProjects = [] }: { initialProjects?: PortfolioProjectDoc[] }) {
+  const [projects, setProjects] = useState<PortfolioProjectDoc[]>(initialProjects);
+  const [loading, setLoading] = useState(initialProjects.length === 0);
 
   useEffect(() => {
+    let settled = false;
+    const failOpenTimer = window.setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        setLoading(false);
+      }
+    }, 5500);
+
     const unsubscribe = onSnapshot(
       query(
           collection(db, "portfolioProjects"),
@@ -21,18 +30,24 @@ export default function HomePortfolio() {
           limit(3),
       ),
       (snapshot) => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
         const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as PortfolioProjectDoc[];
         setProjects(items);
         setLoading(false);
       },
-      (error) => {
-        console.error("Home portfolio realtime listener failed:", error);
-        setProjects([]);
+      () => {
+        settled = true;
+        window.clearTimeout(failOpenTimer);
+        setProjects((currentProjects) => currentProjects);
         setLoading(false);
       },
     );
 
-    return unsubscribe;
+    return () => {
+      window.clearTimeout(failOpenTimer);
+      unsubscribe();
+    };
   }, []);
 
   if (loading) {
@@ -70,8 +85,10 @@ export default function HomePortfolio() {
                   alt={project.title}
                   className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.01]"
                   loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                 />
+                <ProjectCategoryBadge category={project.category} className="absolute left-3 top-3 z-20 sm:left-5 sm:top-5" />
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/35" />
                 <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-5 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A]">{project.category}</p>

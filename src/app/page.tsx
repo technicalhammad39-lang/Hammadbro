@@ -4,7 +4,7 @@ import DualToggleButtons from "@/components/ui/DualButtons";
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
-import { iconAndText, skills, reviews } from '../data/data';
+import { experiences, iconAndText, portfolioData, skills, reviews } from '../data/data';
 import { GenericSlider } from "@/components/ui/GenericSlider";
 import ClientOnly from "@/components/ui/ClientOnly";
 import Reveal from "@/components/ui/Reveal";
@@ -15,6 +15,46 @@ import ServicesSection from "@/components/sections/ServicesSection";
 import ContactForm from "@/components/ContactForm";
 import SiteEmail from "@/components/SiteEmail";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
+import { experienceDocToExperience, PortfolioProjectDoc } from "@/lib/content-types";
+import { getHomeProjects, getPublishedExperiences } from "@/lib/public-content";
+
+export const dynamic = "force-dynamic";
+
+function toInitialProject(project: PortfolioProjectDoc): PortfolioProjectDoc {
+  return {
+    id: project.id,
+    title: project.title,
+    slug: project.slug,
+    category: project.category,
+    shortDescription: project.shortDescription,
+    fullDescription: project.fullDescription,
+    servicesUsed: project.servicesUsed || [],
+    mainImageUrl: project.mainImageUrl,
+    images: project.images || [],
+    order: project.order || 0,
+    featured: Boolean(project.featured),
+    showOnHome: Boolean(project.showOnHome),
+    status: project.status,
+  };
+}
+
+function getCachedHomeProjects(): PortfolioProjectDoc[] {
+  return portfolioData.slice(0, 3).map((project, index) => ({
+    title: project.title,
+    slug: project.slug,
+    category: project.category,
+    shortDescription: project.desc,
+    fullDescription: project.solution,
+    servicesUsed: project.services,
+    mainImageUrl: project.image,
+    images: [],
+    order: index,
+    featured: index === 0,
+    showOnHome: true,
+    status: "published",
+  }));
+}
 
 function renderCounterLabel(label: string) {
   const match = label.match(/^(\d+(?:\.\d+)?)(\+)?\s*(.*)$/);
@@ -91,6 +131,54 @@ const heroSocialLinks = [
   },
 ];
 
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://hammadgfx.online/#hammad-gfx",
+      name: "Hammad GFX",
+      url: "https://hammadgfx.online",
+      jobTitle: "Professional Graphic Designer",
+      email: "hire@hammadgfx.online",
+      sameAs: ["https://linkedin.com/in/hammadgfx", "https://wa.me/923280830815"],
+      knowsAbout: [
+        "Logo Design",
+        "Brand Identity",
+        "Social Media Design",
+        "Print Design",
+        "Banner Design",
+        "YouTube Thumbnail Design",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hammadgfx.online/#website",
+      name: "Hammad GFX",
+      url: "https://hammadgfx.online",
+      publisher: {
+        "@id": "https://hammadgfx.online/#hammad-gfx",
+      },
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://hammadgfx.online/#portfolio",
+      name: "Hammad GFX Graphic Design Portfolio",
+      url: "https://hammadgfx.online/work",
+      creator: {
+        "@id": "https://hammadgfx.online/#hammad-gfx",
+      },
+      about: [
+        "Logo design",
+        "Brand identity design",
+        "Social media graphics",
+        "Print design",
+        "Marketing visuals",
+      ],
+    },
+  ],
+};
+
 function HeroSocialLinks({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
@@ -123,9 +211,24 @@ function CtaArrow() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const [priorityProjects, priorityExperiences] = await Promise.all([
+    getHomeProjects(900),
+    getPublishedExperiences(900),
+  ]);
+  const initialProjects = priorityProjects.length
+    ? priorityProjects.map(toInitialProject)
+    : getCachedHomeProjects();
+  const initialExperiences = priorityExperiences.length
+    ? priorityExperiences.map(experienceDocToExperience)
+    : experiences;
+
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-white pt-4 sm:pt-6 pb-0 flex flex-col items-center justify-start">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd).replace(/</g, "\\u003c") }}
+      />
       <Navbar />
 
       {/* Hero Section */}
@@ -275,9 +378,10 @@ export default function Home() {
       <section id="services" className="relative flex flex-col w-full min-h-0 gap-5 sm:gap-7 items-center px-5 sm:px-6 lg:px-[71px] py-9 sm:py-11 lg:py-12 bg-[#171717] rounded-[30px] sm:rounded-[50px] overflow-hidden">
         <Image
           src="/Frame 77.svg"
-          alt="image"
+          alt=""
           fill
           className="object-cover absolute opacity-50"
+          aria-hidden="true"
         />
 
         <Reveal className="w-full flex flex-col lg:flex-row items-start justify-between gap-5 relative z-10">
@@ -291,11 +395,15 @@ export default function Home() {
         </Reveal>
 
         <div className="relative w-full max-w-[1299px] flex items-start justify-center">
-          <ServicesSection />
+          <SectionErrorBoundary>
+            <ServicesSection />
+          </SectionErrorBoundary>
         </div>
       </section>
 
-      <ExperienceSection />
+      <SectionErrorBoundary>
+        <ExperienceSection initialItems={initialExperiences} />
+      </SectionErrorBoundary>
 
       {/* Portfolio */}
       <section id="projects" className="w-full flex flex-col items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-20 gap-8 lg:gap-12">
@@ -323,7 +431,9 @@ export default function Home() {
         </Reveal>
 
         <div className="w-full flex flex-col items-center gap-8 lg:gap-12 max-w-[1290px]">
-          <HomePortfolio />
+          <SectionErrorBoundary>
+            <HomePortfolio initialProjects={initialProjects} />
+          </SectionErrorBoundary>
         </div>
       </section>
 
@@ -407,9 +517,10 @@ export default function Home() {
       <section className="relative flex flex-col w-full min-h-0 items-center px-5 sm:px-6 lg:px-[71px] py-12 sm:py-16 lg:py-[90px] gap-8 sm:gap-12 bg-[#171717] rounded-[30px] sm:rounded-[40px] lg:rounded-[50px] overflow-hidden">
         <Image
           src="/Frame 77.svg"
-          alt="image"
+          alt=""
           fill
           className="object-cover absolute opacity-50"
+          aria-hidden="true"
         />
 
         <Reveal className="flex flex-col w-full max-w-[1299px] items-center gap-4 z-10 px-2">
@@ -476,7 +587,9 @@ export default function Home() {
           </div>
 
           <ClientOnly>
-            <ContactForm />
+            <SectionErrorBoundary>
+              <ContactForm />
+            </SectionErrorBoundary>
           </ClientOnly>
         </div>
 
@@ -505,7 +618,9 @@ export default function Home() {
             See All
           </Link>
         </Reveal>
-        <HomeBlogSlider />
+        <SectionErrorBoundary>
+          <HomeBlogSlider />
+        </SectionErrorBoundary>
       </section>
 
     </div>

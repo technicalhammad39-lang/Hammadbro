@@ -2,13 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import BlogGrid from "@/components/sections/BlogGrid";
+import SectionErrorBoundary from "@/components/SectionErrorBoundary";
 
 export const metadata: Metadata = {
-  title: "Blog | Hammad GFX",
+  title: "Design Blog",
   description: "Graphic design insights about branding, logo design, social media visuals, and first impressions by Hammad GFX.",
+  alternates: {
+    canonical: "/blog",
+  },
   openGraph: {
-    title: "Blog | Hammad GFX",
+    title: "Design Blog | Hammad GFX",
     description: "Read graphic design insights from Hammad GFX.",
+    url: "/blog",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Design Blog | Hammad GFX",
+    description: "Graphic design insights about branding, logo design, social media visuals, and first impressions.",
   },
 };
 
@@ -30,7 +40,9 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <BlogGrid />
+        <SectionErrorBoundary>
+          <BlogGrid />
+        </SectionErrorBoundary>
 
         <div className="rounded-[32px] bg-[#FFF6ED] p-6 sm:p-8">
           <h2 className="text-2xl font-semibold text-[#171717]">Need visuals for your brand?</h2>
