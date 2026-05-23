@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SourceBackLink from "@/components/ui/SourceBackLink";
-import RichTextContent from "@/components/ui/RichTextContent";
 import { getPortfolioProject, portfolioData } from "@/data/data";
 import { normalizeImageUrl } from "@/lib/image-url";
 import { getProjectBySlug } from "@/lib/public-content";
@@ -27,8 +26,6 @@ async function resolveProject(slug: string) {
       title: firestoreProject.title,
       category: firestoreProject.category,
       shortDescription: firestoreProject.shortDescription,
-      fullDescription: firestoreProject.fullDescription,
-      services: firestoreProject.servicesUsed,
       mainImage: firestoreProject.mainImageUrl,
       images: firestoreProject.images || [],
     };
@@ -39,8 +36,6 @@ async function resolveProject(slug: string) {
       title: fallbackProject.title,
       category: fallbackProject.category,
       shortDescription: fallbackProject.desc,
-      fullDescription: fallbackProject.solution,
-      services: fallbackProject.services,
       mainImage: fallbackProject.image,
       images: [],
     };
@@ -100,57 +95,55 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  const galleryImages = [project.mainImage, ...project.images].filter(Boolean);
+  const normalizedMainImage = project.mainImage ? normalizeImageUrl(project.mainImage) : "";
+  const galleryImages = Array.from(
+    new Set(
+      project.images
+        .filter(Boolean)
+        .map((image) => normalizeImageUrl(image))
+        .filter((image) => image !== normalizedMainImage),
+    ),
+  );
 
   return (
     <main className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-white px-5 pb-16 pt-4 sm:px-6 sm:pt-6 lg:px-[71px]">
       <Navbar />
 
-      <article className="mx-auto flex w-full max-w-[1298px] flex-col gap-8 py-10 sm:py-14 lg:py-16">
-        <section className="grid gap-8 rounded-[32px] bg-[#171717] p-6 text-white sm:rounded-[44px] sm:p-10 lg:grid-cols-[1fr_0.9fr] lg:p-12">
-          <div className="flex flex-col justify-between gap-8">
+      <article className="mx-auto flex w-full max-w-[1298px] flex-col gap-6 py-8 sm:py-10 lg:py-12">
+        <section className="relative grid overflow-hidden rounded-[28px] bg-[#171717] p-5 text-white sm:rounded-[38px] sm:p-7 lg:grid-cols-[1fr_0.72fr] lg:gap-8 lg:p-8">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rotate-12 rounded-[34px] bg-gradient-to-br from-[#FD853A]/45 via-[#FD853A]/10 to-transparent blur-[1px]" aria-hidden="true" />
+          <div className="pointer-events-none absolute right-0 top-0 h-24 w-32 bg-[#FD853A]/20 [clip-path:polygon(100%_0,0_0,100%_100%)]" aria-hidden="true" />
+          <div className="pointer-events-none absolute -bottom-20 left-10 h-40 w-40 rounded-full bg-[#FD853A]/10 blur-3xl" aria-hidden="true" />
+
+          <div className="relative z-10 flex flex-col justify-between gap-6">
             <div>
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#FD853A]">{project.category}</p>
-              <h1 className="text-[42px] font-semibold leading-[0.98] sm:text-[64px] lg:text-[78px]">{project.title}</h1>
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">{project.shortDescription}</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#FD853A] sm:text-sm sm:tracking-[0.22em]">{project.category}</p>
+              <h1 className="text-[clamp(34px,6vw,62px)] font-semibold leading-[1.02]">{project.title}</h1>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base lg:text-lg">{project.shortDescription}</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/#contact" className="rounded-full bg-[#FD853A] px-6 py-3.5 text-center text-base font-semibold text-white transition-colors hover:bg-[#e46e24]">
+              <Link href="/#contact" className="rounded-full bg-[#FD853A] px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#e46e24] sm:px-6 sm:text-base">
                 Start a Similar Project
               </Link>
-              <SourceBackLink source="projects" homeHref="/#projects" defaultHref="/portfolio" className="rounded-full border border-white/40 px-6 py-3.5 text-center text-base font-semibold text-white transition-colors hover:bg-white hover:text-[#171717]">
+              <SourceBackLink source="projects" homeHref="/#projects" defaultHref="/portfolio" className="rounded-full border border-white/40 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#171717] sm:px-6 sm:text-base">
                 Back to Portfolio
               </SourceBackLink>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[28px] bg-white/10">
+          <div className="relative z-10 mt-6 flex items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-white/8 p-2 lg:mt-0 lg:p-3">
             {project.mainImage ? (
-              <img src={normalizeImageUrl(project.mainImage)} alt={project.title} className="h-auto w-full" />
+              <img src={normalizedMainImage} alt={project.title} className="h-auto max-h-[260px] w-full rounded-[18px] object-contain sm:max-h-[300px] lg:max-h-[320px]" />
             ) : (
-              <div className="flex min-h-[280px] items-center justify-center text-white/60">No project image</div>
+              <div className="flex min-h-[180px] items-center justify-center text-white/60">No project image</div>
             )}
           </div>
-        </section>
-
-        <section className="grid gap-5 lg:grid-cols-4">
-          {project.services.map((service) => (
-            <div key={service} className="rounded-[28px] border border-[#E4E7EC] bg-[#F9FAFB] p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#FD853A]">Service</p>
-              <h2 className="mt-3 text-xl font-semibold text-[#171717]">{service}</h2>
-            </div>
-          ))}
-        </section>
-
-        <section className="rounded-[32px] border border-[#FD853A]/25 bg-[#FFF6ED] p-6 sm:p-8 lg:p-10">
-          <h2 className="text-3xl font-semibold text-[#171717]">Project Details</h2>
-          <RichTextContent value={project.fullDescription} className="mt-4 max-w-4xl text-lg leading-relaxed text-[#667085]" />
         </section>
 
         {galleryImages.length > 0 && (
           <section className="columns-1 gap-6 md:columns-2">
             {galleryImages.map((image) => (
-              <img key={image} src={normalizeImageUrl(image)} alt={project.title} className="mb-6 h-auto w-full break-inside-avoid rounded-[24px]" />
+              <img key={image} src={image} alt={`${project.title} gallery image`} className="mb-6 h-auto w-full break-inside-avoid rounded-[24px] bg-[#F2F4F7]" loading="lazy" decoding="async" />
             ))}
           </section>
         )}
