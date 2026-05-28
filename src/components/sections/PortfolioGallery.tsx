@@ -7,7 +7,6 @@ import { portfolioCategories } from "@/data/data";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { normalizeImageUrl } from "@/lib/image-url";
-import ProjectCategoryBadge from "@/components/ui/ProjectCategoryBadge";
 
 export default function PortfolioGallery({
   initialCategory = "All",
@@ -103,7 +102,6 @@ export default function PortfolioGallery({
                 loading="lazy"
                 decoding="async"
               />
-              <ProjectCategoryBadge category={project.category} className="absolute left-3 top-3 z-20 sm:left-4 sm:top-4" />
               <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/45" />
               <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A]">{project.category}</p>

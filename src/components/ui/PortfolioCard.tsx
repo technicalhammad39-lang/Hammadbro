@@ -5,7 +5,6 @@ import Image from 'next/image';
 import ArrowButton from './ArrowButton';
 import { PortfolioItem } from '@/data/data';
 import { normalizeImageUrl } from '@/lib/image-url';
-import ProjectCategoryBadge from './ProjectCategoryBadge';
 
 interface PortfolioCardProps extends Pick<PortfolioItem, 'image' | 'title' | 'href' | 'desc'> {
   category?: string;
@@ -48,7 +47,6 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, title, href, desc,
       />
 
       <div className="absolute inset-0 z-10 bg-black/0 transition-colors duration-500 ease-out md:group-hover:bg-black/55 md:group-focus-visible:bg-black/55" />
-      <ProjectCategoryBadge category={category} className="absolute left-3 top-3 z-20 sm:left-4 sm:top-4" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black/40 to-transparent opacity-80 md:opacity-0 md:transition-opacity md:duration-500 md:group-hover:opacity-100" />
 
       <div className="absolute bottom-3 right-3 z-20 flex items-center gap-2 rounded-full bg-[#FD853A] px-4 py-2 text-sm font-semibold text-white shadow-lg md:hidden">

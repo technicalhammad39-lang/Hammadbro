@@ -45,11 +45,6 @@ svg {
   max-width: 100%;
 }
 
-img,
-video {
-  height: auto;
-}
-
 section {
   scroll-margin-top: 110px;
   max-width: 100vw;
@@ -170,6 +165,34 @@ select {
   overflow: hidden;
   color: #FD853A;
   white-space: nowrap;
+  font-family: var(--font-highlight), var(--font-geist-sans), sans-serif;
+  letter-spacing: 0;
+}
+
+.creative-highlight {
+  font-family: var(--font-highlight), var(--font-geist-sans), sans-serif;
+  letter-spacing: 0;
+}
+
+.contact-side-element,
+.experience-side-element {
+  animation: side-art-float 8.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.contact-side-right {
+  animation-delay: -2.2s;
+}
+
+.contact-side-glow,
+.experience-side-glow {
+  animation: side-art-glow 9s ease-in-out infinite alternate;
+  filter: blur(16px);
+  will-change: transform, opacity;
+}
+
+.experience-side-glow {
+  filter: blur(18px);
 }
 
 .hero-rotating-line > span {
@@ -205,6 +228,27 @@ select {
   100% {
     transform: translateY(-100%);
     opacity: 0;
+  }
+}
+
+@keyframes side-art-float {
+  0%,
+  100% {
+    transform: translate3d(0, -50%, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(0, calc(-50% - 12px), 0) rotate(4deg) scale(1.035);
+  }
+}
+
+@keyframes side-art-glow {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.92) rotate(0deg);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.12) rotate(12deg);
   }
 }
 
@@ -581,7 +625,11 @@ select {
   .premium-cta-outline::before,
   .timeline-flow-line,
   .stat-number-glow,
-  .premium-dark-hero::before {
+  .premium-dark-hero::before,
+  .contact-side-element,
+  .experience-side-element,
+  .contact-side-glow,
+  .experience-side-glow {
     animation: none !important;
   }
 

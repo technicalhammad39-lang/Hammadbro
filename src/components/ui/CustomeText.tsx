@@ -6,9 +6,11 @@ interface CustomeTextProps {
 }
 
 const CustomeText: React.FC<CustomeTextProps> = ({ title, className  }) => {
+  const isHighlighted = className?.includes("text-[#FD853A]");
+
   return (
     <div
-      className={`leading-tight ${className}`}
+      className={`leading-tight ${isHighlighted ? "creative-highlight" : ""} ${className || ""}`}
     >
       {title}
     </div>

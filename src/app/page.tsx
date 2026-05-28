@@ -40,7 +40,7 @@ function toInitialProject(project: PortfolioProjectDoc): PortfolioProjectDoc {
 }
 
 function getCachedHomeProjects(): PortfolioProjectDoc[] {
-  return portfolioData.slice(0, 3).map((project, index) => ({
+  return portfolioData.slice(0, 6).map((project, index) => ({
     title: project.title,
     slug: project.slug,
     category: project.category,
@@ -247,7 +247,7 @@ export default async function Home() {
           <div className="hero-load-left absolute left-0 top-[72px] z-30 lg:top-[52px] xl:top-[40px]">
             <h1 className="font-semibold leading-[0.92] text-[#171717]">
               <span className="block text-[40px] lg:text-[50px] xl:text-[62px]">Hey! I&apos;m</span>
-              <span className="block text-[56px] text-[#FD853A] lg:text-[76px] xl:text-[94px]">Hammad</span>
+              <span className="creative-highlight block text-[56px] text-[#FD853A] lg:text-[76px] xl:text-[94px]">Hammad</span>
             </h1>
 
             <div className="mt-6 max-w-[250px] lg:mt-7 lg:max-w-[300px] xl:mt-8 xl:max-w-[340px]">
@@ -319,7 +319,7 @@ export default async function Home() {
               <span className="absolute left-[8%] top-[14%] text-[clamp(28px,7.8vw,44px)] font-semibold leading-none text-[#171717]">
                 I&apos;m
               </span>
-              <span className="absolute left-1/2 top-[27%] w-[116%] -translate-x-1/2 text-center text-[clamp(52px,16.5vw,104px)] font-semibold leading-none text-[#FD853A]">
+              <span className="creative-highlight absolute left-1/2 top-[27%] w-[116%] -translate-x-1/2 text-center text-[clamp(52px,16.5vw,104px)] font-semibold leading-none text-[#FD853A]">
                 HAMMAD
               </span>
             </div>
@@ -553,8 +553,29 @@ export default async function Home() {
 
 
       {/* Contact */}
-      <section id="contact" className="w-full bg-white flex flex-col items-center justify-center py-12 sm:py-16 px-5 sm:px-6 lg:px-[71px] gap-8 sm:gap-10">
-        <Reveal className="w-full max-w-4xl text-center flex flex-col items-center gap-3 sm:gap-4">
+      <section id="contact" className="relative isolate w-full overflow-hidden bg-white flex flex-col items-center justify-center py-12 sm:py-16 px-5 sm:px-6 lg:px-[71px] gap-8 sm:gap-10">
+        <div className="contact-side-element contact-side-left pointer-events-none absolute left-2 top-[48%] hidden h-36 w-36 -translate-y-1/2 md:block lg:left-8 lg:h-44 lg:w-44 xl:left-14 xl:h-52 xl:w-52" aria-hidden="true">
+          <span className="contact-side-glow absolute inset-4 rounded-full bg-[#FD853A]/25" />
+          <Image
+            src="/side1.png"
+            alt=""
+            fill
+            className="relative z-10 object-contain opacity-75 drop-shadow-[0_18px_28px_rgba(253,133,58,0.22)]"
+            sizes="(min-width: 1280px) 208px, (min-width: 1024px) 176px, 144px"
+          />
+        </div>
+        <div className="contact-side-element contact-side-right pointer-events-none absolute right-2 top-[22%] hidden h-32 w-32 md:block lg:right-8 lg:h-40 lg:w-40 xl:right-16 xl:h-48 xl:w-48" aria-hidden="true">
+          <span className="contact-side-glow absolute inset-3 rounded-full bg-[#171717]/10" />
+          <Image
+            src="/side1.png"
+            alt=""
+            fill
+            className="relative z-10 rotate-[18deg] object-contain opacity-65 drop-shadow-[0_18px_28px_rgba(253,133,58,0.18)]"
+            sizes="(min-width: 1280px) 192px, (min-width: 1024px) 160px, 128px"
+          />
+        </div>
+
+        <Reveal className="relative z-10 w-full max-w-4xl text-center flex flex-col items-center gap-3 sm:gap-4">
           <CustomeText
             title="Have an Awesome Project"
             className="font-semibold text-[32px] sm:text-4xl md:text-5xl lg:text-[64px] leading-tight text-[#344054]"
@@ -571,7 +592,7 @@ export default async function Home() {
           </div>
         </Reveal>
 
-        <div className="w-full max-w-5xl rounded-[32px] border border-[#E4E7EC] bg-white p-4 shadow-sm sm:p-5 md:p-7">
+        <div className="relative z-10 w-full max-w-5xl rounded-[32px] border border-[#E4E7EC] bg-white p-4 shadow-sm sm:p-5 md:p-7">
           <div className="mb-5 flex items-center gap-3 px-1">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFEAD5] md:h-[50px] md:w-[50px]">
               <Image
@@ -597,7 +618,7 @@ export default async function Home() {
           <SiteEmail className="text-base font-semibold text-[#171717] transition-colors hover:text-[#FD853A]" />
         </ClientOnly>
 
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm sm:text-base font-medium text-[#000000]">
+        <div className="relative z-10 flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm sm:text-base font-medium text-[#000000]">
           {iconAndText.map((data, index) => {
             const Icon = data.icon;
             return (

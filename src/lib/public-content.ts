@@ -77,7 +77,7 @@ export async function getHomeProjects(timeoutMs = FIRESTORE_READ_TIMEOUT_MS) {
         .where("status", "==", "published")
         .where("showOnHome", "==", true)
         .orderBy("order", "asc")
-        .limit(3)
+        .limit(6)
         .get(),
       null,
       timeoutMs,

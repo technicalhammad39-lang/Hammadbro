@@ -2,6 +2,7 @@
 
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { Fragment, useEffect, useState } from "react";
+import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import CustomeText from "@/components/ui/CustomeText";
 import { Experience } from "@/data/data";
@@ -45,7 +46,18 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
   }, []);
 
   return (
-    <section className="w-full min-h-0 flex flex-col items-start mx-auto px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
+    <section className="relative isolate w-full min-h-0 flex flex-col items-start mx-auto overflow-hidden px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
+      <div className="experience-side-element pointer-events-none absolute right-0 top-1/2 z-0 hidden h-60 w-60 -translate-y-1/2 opacity-55 xl:block 2xl:right-12 2xl:h-72 2xl:w-72" aria-hidden="true">
+        <span className="experience-side-glow absolute inset-6 rounded-full bg-[#FD853A]/20" />
+        <Image
+          src="/side2.png"
+          alt=""
+          fill
+          className="relative z-10 object-contain drop-shadow-[0_22px_32px_rgba(253,133,58,0.20)]"
+          sizes="(min-width: 1536px) 288px, 240px"
+        />
+      </div>
+
       <Reveal className="flex w-full flex-col items-center justify-center gap-1 text-center lg:hidden mb-6">
         <CustomeText title="My" className="font-medium text-[clamp(30px,9vw,36px)] text-[#344054]" />
         <div className="flex items-center justify-center gap-2 whitespace-nowrap">
@@ -54,7 +66,7 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
         </div>
       </Reveal>
 
-      <Reveal className="hidden w-full h-auto lg:flex flex-wrap lg:flex-row items-start justify-center gap-x-2.5 mb-6 lg:mb-6 text-center lg:text-left">
+      <Reveal className="relative z-10 hidden w-full max-w-[980px] h-auto lg:flex flex-wrap lg:flex-row items-start justify-start gap-x-2.5 mb-6 lg:mb-6 text-left">
         <CustomeText title="My" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#344054]" />
         <CustomeText title="Work" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
         <CustomeText title="Experience" className="font-medium text-4xl sm:text-5xl lg:text-6xl text-[#FD853A]" />
@@ -95,8 +107,8 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
         ))}
       </div>}
 
-      {!loading && items.length > 0 && <Reveal className="hidden w-full justify-center lg:flex">
-        <div className="grid w-full max-w-[1210px] grid-cols-[minmax(300px,420px)_64px_minmax(440px,560px)] gap-x-8 gap-y-8">
+      {!loading && items.length > 0 && <Reveal className="relative z-10 hidden w-full justify-start lg:flex">
+        <div className="grid w-full max-w-[980px] grid-cols-[minmax(260px,360px)_56px_minmax(320px,460px)] gap-x-7 gap-y-8">
           {items.map((exp, index) => (
             <Fragment key={`${exp.company}-${exp.role}`}>
               <div className="flex min-h-[132px] flex-col gap-3">

@@ -109,33 +109,33 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     <main className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-white px-5 pb-16 pt-4 sm:px-6 sm:pt-6 lg:px-[71px]">
       <Navbar />
 
-      <article className="mx-auto flex w-full max-w-[1298px] flex-col gap-6 py-8 sm:py-10 lg:py-12">
-        <section className="relative grid overflow-hidden rounded-[28px] bg-[#171717] p-5 text-white sm:rounded-[38px] sm:p-7 lg:grid-cols-[1fr_0.72fr] lg:gap-8 lg:p-8">
+      <article className="mx-auto flex w-full max-w-[1298px] flex-col gap-5 py-5 sm:py-7 lg:py-10">
+        <section className="relative grid overflow-hidden rounded-[26px] bg-[#171717] p-3.5 text-white sm:rounded-[34px] sm:p-6 lg:grid-cols-[1fr_0.68fr] lg:gap-7 lg:p-7">
           <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rotate-12 rounded-[34px] bg-gradient-to-br from-[#FD853A]/45 via-[#FD853A]/10 to-transparent blur-[1px]" aria-hidden="true" />
           <div className="pointer-events-none absolute right-0 top-0 h-24 w-32 bg-[#FD853A]/20 [clip-path:polygon(100%_0,0_0,100%_100%)]" aria-hidden="true" />
           <div className="pointer-events-none absolute -bottom-20 left-10 h-40 w-40 rounded-full bg-[#FD853A]/10 blur-3xl" aria-hidden="true" />
 
-          <div className="relative z-10 flex flex-col justify-between gap-6">
+          <div className="relative z-10 flex flex-col justify-between gap-4 sm:gap-5">
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#FD853A] sm:text-sm sm:tracking-[0.22em]">{project.category}</p>
-              <h1 className="text-[clamp(34px,6vw,62px)] font-semibold leading-[1.02]">{project.title}</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base lg:text-lg">{project.shortDescription}</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A] sm:mb-2.5 sm:text-sm sm:tracking-[0.2em]">{project.category}</p>
+              <h1 className="text-[clamp(28px,5.2vw,56px)] font-semibold leading-[1.03]">{project.title}</h1>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/75 sm:mt-3 sm:text-base">{project.shortDescription}</p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="/#contact" className="rounded-full bg-[#FD853A] px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#e46e24] sm:px-6 sm:text-base">
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-2.5">
+              <Link href="/#contact" className="rounded-full bg-[#FD853A] px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-[#e46e24] sm:px-5 sm:py-2.5">
                 Start a Similar Project
               </Link>
-              <SourceBackLink source="projects" homeHref="/#projects" defaultHref="/portfolio" className="rounded-full border border-white/40 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#171717] sm:px-6 sm:text-base">
+              <SourceBackLink source="projects" homeHref="/#projects" defaultHref="/work" className="rounded-full border border-white/40 px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#171717] sm:px-5 sm:py-2.5">
                 Back to Portfolio
               </SourceBackLink>
             </div>
           </div>
 
-          <div className="relative z-10 mt-6 flex items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-white/8 p-2 lg:mt-0 lg:p-3">
+          <div className="relative z-10 mt-4 flex items-center justify-center overflow-hidden rounded-[22px] border border-white/10 bg-white/8 p-1.5 sm:mt-5 sm:p-2 lg:mt-0">
             {project.mainImage ? (
-              <img src={normalizedMainImage} alt={project.title} className="h-auto max-h-[260px] w-full rounded-[18px] object-contain sm:max-h-[300px] lg:max-h-[320px]" />
+              <img src={normalizedMainImage} alt={project.title} className="h-auto max-h-[180px] w-full rounded-[16px] object-contain sm:max-h-[240px] lg:max-h-[285px]" />
             ) : (
-              <div className="flex min-h-[180px] items-center justify-center text-white/60">No project image</div>
+              <div className="flex min-h-[150px] items-center justify-center text-white/60">No project image</div>
             )}
           </div>
         </section>

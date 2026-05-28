@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { PortfolioProjectDoc } from "@/lib/content-types";
 import { normalizeImageUrl } from "@/lib/image-url";
-import ProjectCategoryBadge from "@/components/ui/ProjectCategoryBadge";
 
 export default function HomePortfolio({ initialProjects = [] }: { initialProjects?: PortfolioProjectDoc[] }) {
   const [projects, setProjects] = useState<PortfolioProjectDoc[]>(initialProjects);
@@ -27,7 +26,7 @@ export default function HomePortfolio({ initialProjects = [] }: { initialProject
           where("status", "==", "published"),
           where("showOnHome", "==", true),
           orderBy("order", "asc"),
-          limit(3),
+          limit(6),
       ),
       (snapshot) => {
         settled = true;
@@ -64,10 +63,12 @@ export default function HomePortfolio({ initialProjects = [] }: { initialProject
     return <div className="w-full max-w-[980px] rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Portfolio projects will appear here soon.</div>;
   }
 
+  const visibleProjects = projects.slice(0, 6);
+
   return (
-    <div className="flex w-full max-w-[980px] flex-col gap-8">
-      {projects.map((project, index) => {
-        const isLast = index === projects.length - 1;
+    <div className="flex w-full max-w-[1050px] flex-col gap-7 sm:gap-8">
+      {visibleProjects.map((project, index) => {
+        const isLast = index === visibleProjects.length - 1;
         return (
           <div key={project.slug} className="relative">
             <Link
@@ -83,12 +84,11 @@ export default function HomePortfolio({ initialProjects = [] }: { initialProject
                 <img
                   src={normalizeImageUrl(project.mainImageUrl)}
                   alt={project.title}
-                  className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+                  className="h-[250px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015] sm:h-[340px] md:h-[390px] lg:h-[460px] xl:h-[500px]"
                   loading={index === 0 ? "eager" : "lazy"}
                   fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                 />
-                <ProjectCategoryBadge category={project.category} className="absolute left-3 top-3 z-20 sm:left-5 sm:top-5" />
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/35" />
                 <div className="absolute inset-x-4 bottom-4 translate-y-4 rounded-[18px] border border-white/20 bg-black/45 p-5 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#FD853A]">{project.category}</p>
