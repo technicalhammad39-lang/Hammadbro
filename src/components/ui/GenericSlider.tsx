@@ -40,6 +40,7 @@ export function GenericSlider<T extends AllowedCard>({
   const isReview = cardType === 'review';
   const isPortfolio = cardType === 'portfolio';
   const isBlog = cardType === 'blog';
+  const isHover = cardType === 'hover';
   const shouldLoop = isReview || cardType === 'hover' ? data.length > 1 : data.length > slidesPerView * 2;
 
   useEffect(() => {
@@ -55,8 +56,8 @@ export function GenericSlider<T extends AllowedCard>({
       >
         <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
           <div className="flex gap-4 overflow-hidden">
-            {data.slice(0, 3).map((item, index) => (
-              <div key={index} className="flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm">
+            {data.slice(0, isHover ? 6 : 3).map((item, index) => (
+              <div key={index} className={isHover ? "flex-shrink-0 w-[86vw] max-w-[360px] sm:w-[280px] sm:max-w-none md:w-[245px] lg:w-[220px] xl:w-[230px] 2xl:w-[245px]" : "flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm"}>
                 {cardType === 'hover' && 'title' in item && 'imageSrc' in item && 'desc' in item && 'icon' in item && (
                   <ServicesCard title={item.title} imageSrc={item.imageSrc} desc={item.desc} icon={item.icon} priority={index === 0} />
                 )}
@@ -111,45 +112,45 @@ export function GenericSlider<T extends AllowedCard>({
       <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
         <Swiper
           modules={[Pagination, Autoplay]}
-          spaceBetween={cardType === 'hover' ? 18 : 20}
+          spaceBetween={isHover ? 16 : 20}
           centeredSlides={false}
           loop={shouldLoop}
           autoplay={{
-            delay: cardType === 'hover' ? 2400 : 3000,
+            delay: isHover ? 2400 : 3000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
-          speed={cardType === 'hover' ? 850 : 650}
+          speed={isHover ? 850 : 650}
           pagination={{ clickable: true }}
           grabCursor
           breakpoints={{
             0: {
-              slidesPerView: isPortfolio ? 1 : 1,
+              slidesPerView: isHover ? 'auto' : 1,
               spaceBetween: 16,
             },
             640: {
-              slidesPerView: isPortfolio || isBlog || isReview ? 1 : 2,
-              spaceBetween: 18,
+              slidesPerView: isHover ? 'auto' : isPortfolio || isBlog || isReview ? 1 : 2,
+              spaceBetween: isHover ? 16 : 18,
             },
             850: {
-              slidesPerView: isPortfolio || isBlog || isReview ? 1 : cardType === 'hover' ? 2 : 2,
-              spaceBetween: 20,
+              slidesPerView: isHover ? 'auto' : isPortfolio || isBlog || isReview ? 1 : 2,
+              spaceBetween: isHover ? 16 : 20,
             },
             1024: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? 3 : Math.min(slidesPerView, 3),
-              spaceBetween: cardType === 'hover' ? 22 : 24,
+              slidesPerView: isHover ? 'auto' : isPortfolio ? 2 : isReview ? 2 : Math.min(slidesPerView, 3),
+              spaceBetween: isHover ? 16 : 24,
             },
             1280: {
-              slidesPerView: isPortfolio ? 2 : isReview ? 2 : cardType === 'hover' ? Math.min(Math.max(slidesPerView, 3), 4) : slidesPerView,
-              spaceBetween: cardType === 'hover' ? 24 : 24,
+              slidesPerView: isHover ? 'auto' : isPortfolio ? 2 : isReview ? 2 : slidesPerView,
+              spaceBetween: isHover ? 18 : 24,
             },
           }}
-          className={cardType === 'hover' ? '!pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
+          className={isHover ? '!pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
         >
           {data.map((item, index) => (
             <SwiperSlide
               key={index}
-              className="!flex !justify-center"
+              className={isHover ? "!flex !w-[86vw] !max-w-[360px] !justify-center sm:!w-[280px] sm:!max-w-none md:!w-[245px] lg:!w-[220px] xl:!w-[230px] 2xl:!w-[245px]" : "!flex !justify-center"}
             >
               <motion.div
                 className="flex w-full justify-center"
