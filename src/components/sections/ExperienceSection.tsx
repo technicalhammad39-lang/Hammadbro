@@ -47,13 +47,12 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
 
   return (
     <section className="relative isolate w-full min-h-0 flex flex-col items-start mx-auto overflow-hidden px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
-      <div className="experience-side-element pointer-events-none absolute right-[-120px] top-[52%] z-0 hidden h-[520px] w-[205px] opacity-75 lg:block xl:right-[-104px] xl:h-[570px] xl:w-[222px] 2xl:right-[-92px] 2xl:h-[620px] 2xl:w-[242px]" aria-hidden="true">
-        <span className="experience-side-glow absolute inset-x-4 inset-y-16 rounded-full bg-[#FD853A]/16" />
+      <div className="experience-side-element pointer-events-none absolute right-[-120px] top-[52%] z-0 hidden h-[520px] w-[205px] -translate-y-1/2 lg:block xl:right-[-104px] xl:h-[570px] xl:w-[222px] 2xl:right-[-92px] 2xl:h-[620px] 2xl:w-[242px]" aria-hidden="true">
         <Image
           src="/side1.png"
           alt=""
           fill
-          className="relative z-10 object-contain drop-shadow-[0_18px_28px_rgba(253,133,58,0.10)]"
+          className="relative z-10 object-contain"
           sizes="(min-width: 1536px) 242px, (min-width: 1280px) 222px, 205px"
         />
       </div>
