@@ -554,24 +554,24 @@ export default async function Home() {
 
       {/* Contact */}
       <section id="contact" className="relative isolate w-full overflow-hidden bg-white flex flex-col items-center justify-center py-12 sm:py-16 px-5 sm:px-6 lg:px-[71px] gap-8 sm:gap-10">
-        <div className="contact-side-element contact-side-left pointer-events-none absolute left-[-170px] top-[60%] z-0 hidden h-[310px] w-[310px] opacity-70 md:block lg:left-[-150px] lg:h-[390px] lg:w-[390px] xl:left-[-125px] xl:h-[470px] xl:w-[470px]" aria-hidden="true">
-          <span className="contact-side-glow absolute inset-12 rounded-full bg-[#FD853A]/25" />
+        <div className="contact-side-element contact-side-left pointer-events-none absolute left-[-120px] top-[52%] z-0 hidden h-[500px] w-[210px] opacity-75 md:block lg:left-[-140px] lg:h-[560px] lg:w-[234px] xl:left-[-150px] xl:h-[620px] xl:w-[258px]" aria-hidden="true">
+          <span className="contact-side-glow absolute inset-x-4 inset-y-16 rounded-full bg-[#FD853A]/16" />
           <Image
             src="/lside.png"
             alt=""
             fill
-            className="relative z-10 -rotate-[18deg] object-contain drop-shadow-[0_20px_30px_rgba(253,133,58,0.18)]"
-            sizes="(min-width: 1280px) 470px, (min-width: 1024px) 390px, 310px"
+            className="relative z-10 object-contain drop-shadow-[0_18px_28px_rgba(253,133,58,0.10)]"
+            sizes="(min-width: 1280px) 258px, (min-width: 1024px) 234px, 210px"
           />
         </div>
-        <div className="contact-side-element contact-side-right pointer-events-none absolute right-[-155px] top-[30%] z-0 hidden h-[300px] w-[300px] opacity-75 md:block lg:right-[-120px] lg:h-[380px] lg:w-[380px] xl:right-[-95px] xl:top-[28%] xl:h-[460px] xl:w-[460px]" aria-hidden="true">
-          <span className="contact-side-glow absolute inset-12 rounded-full bg-[#FD853A]/20" />
+        <div className="contact-side-element contact-side-right pointer-events-none absolute right-[-118px] top-[34%] z-0 hidden h-[480px] w-[245px] opacity-75 md:block lg:right-[-125px] lg:h-[540px] lg:w-[273px] xl:right-[-140px] xl:h-[600px] xl:w-[304px]" aria-hidden="true">
+          <span className="contact-side-glow absolute inset-x-5 inset-y-16 rounded-full bg-[#FD853A]/14" />
           <Image
             src="/rside.png"
             alt=""
             fill
-            className="relative z-10 rotate-[16deg] object-contain drop-shadow-[0_20px_30px_rgba(253,133,58,0.18)]"
-            sizes="(min-width: 1280px) 460px, (min-width: 1024px) 380px, 300px"
+            className="relative z-10 object-contain drop-shadow-[0_18px_28px_rgba(253,133,58,0.10)]"
+            sizes="(min-width: 1280px) 304px, (min-width: 1024px) 273px, 245px"
           />
         </div>
 

@@ -47,14 +47,14 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
 
   return (
     <section className="relative isolate w-full min-h-0 flex flex-col items-start mx-auto overflow-hidden px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
-      <div className="experience-side-element pointer-events-none absolute right-[-210px] top-[56%] z-0 hidden h-[360px] w-[360px] opacity-50 lg:block xl:right-[-130px] xl:h-[440px] xl:w-[440px] xl:opacity-95 2xl:right-[-90px] 2xl:h-[500px] 2xl:w-[500px]" aria-hidden="true">
-        <span className="experience-side-glow absolute inset-12 rounded-full bg-[#FD853A]/25" />
+      <div className="experience-side-element pointer-events-none absolute right-[-120px] top-[52%] z-0 hidden h-[520px] w-[205px] opacity-75 lg:block xl:right-[-104px] xl:h-[570px] xl:w-[222px] 2xl:right-[-92px] 2xl:h-[620px] 2xl:w-[242px]" aria-hidden="true">
+        <span className="experience-side-glow absolute inset-x-4 inset-y-16 rounded-full bg-[#FD853A]/16" />
         <Image
           src="/side1.png"
           alt=""
           fill
-          className="relative z-10 object-contain drop-shadow-[0_24px_34px_rgba(253,133,58,0.18)]"
-          sizes="(min-width: 1536px) 500px, (min-width: 1280px) 440px, 360px"
+          className="relative z-10 object-contain drop-shadow-[0_18px_28px_rgba(253,133,58,0.10)]"
+          sizes="(min-width: 1536px) 242px, (min-width: 1280px) 222px, 205px"
         />
       </div>
 

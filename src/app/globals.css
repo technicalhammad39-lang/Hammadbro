@@ -234,10 +234,10 @@ select {
 @keyframes side-art-float {
   0%,
   100% {
-    transform: translate3d(0, -50%, 0) rotate(0deg) scale(1);
+    transform: translate3d(0, -50%, 0) scale(1);
   }
   50% {
-    transform: translate3d(0, calc(-50% - 12px), 0) rotate(4deg) scale(1.035);
+    transform: translate3d(0, calc(-50% - 10px), 0) scale(1.025);
   }
 }
 
