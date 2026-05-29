@@ -239,7 +239,7 @@ export default async function Home() {
             alt=""
             width={5542}
             height={1748}
-            className="hero-bottom-shape hero-load-shape absolute -bottom-7 left-1/2 z-0 !h-[335px] w-[150vw] !max-w-none -translate-x-1/2 object-fill object-bottom lg:!h-[365px] lg:w-[125vw] xl:w-[118vw]"
+            className="hero-bottom-shape hero-load-shape absolute -bottom-[44px] left-1/2 z-0 !h-[360px] w-[150vw] !max-w-none -translate-x-1/2 object-fill object-bottom lg:-bottom-[58px] lg:!h-[380px] lg:w-[125vw] xl:-bottom-[62px] xl:!h-[395px] xl:w-[118vw]"
             priority
             aria-hidden="true"
           />
@@ -394,7 +394,7 @@ export default async function Home() {
           </p>
         </Reveal>
 
-        <div className="relative w-full max-w-[1299px] flex items-start justify-center">
+        <div className="relative z-10 w-full max-w-none flex items-start justify-center">
           <SectionErrorBoundary>
             <ServicesSection />
           </SectionErrorBoundary>
@@ -430,7 +430,7 @@ export default async function Home() {
           </Link>
         </Reveal>
 
-        <div className="w-full flex flex-col items-center gap-8 lg:gap-12 max-w-[1290px]">
+        <div className="w-full max-w-none flex flex-col items-stretch gap-8 lg:gap-12">
           <SectionErrorBoundary>
             <HomePortfolio initialProjects={initialProjects} />
           </SectionErrorBoundary>

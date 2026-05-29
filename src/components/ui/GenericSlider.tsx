@@ -42,6 +42,7 @@ export function GenericSlider<T extends AllowedCard>({
   const isBlog = cardType === 'blog';
   const isHover = cardType === 'hover';
   const shouldLoop = isReview || cardType === 'hover' ? data.length > 1 : data.length > slidesPerView * 2;
+  const sliderShellClass = `w-full max-w-full px-0 ${isHover ? 'sm:px-0 lg:px-0' : 'sm:px-6 lg:px-0'} ${!isReview && !isHover ? 'lg:max-w-[1440px]' : ''}`;
 
   useEffect(() => {
     setIsClient(true);
@@ -54,10 +55,10 @@ export function GenericSlider<T extends AllowedCard>({
         className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
         data-lenis-prevent-touch
       >
-        <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
+        <div className={sliderShellClass}>
           <div className="flex gap-4 overflow-hidden">
             {data.slice(0, isHover ? 6 : 3).map((item, index) => (
-              <div key={index} className={isHover ? "flex-shrink-0 w-[86vw] max-w-[360px] sm:w-[280px] sm:max-w-none md:w-[245px] lg:w-[220px] xl:w-[230px] 2xl:w-[245px]" : "flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm"}>
+              <div key={index} className={isHover ? "flex-shrink-0 w-[86vw] max-w-[360px] sm:w-[280px] sm:max-w-none md:w-[245px] lg:w-[225px] xl:w-[238px] 2xl:w-[250px]" : "flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm"}>
                 {cardType === 'hover' && 'title' in item && 'imageSrc' in item && 'desc' in item && 'icon' in item && (
                   <ServicesCard title={item.title} imageSrc={item.imageSrc} desc={item.desc} icon={item.icon} priority={index === 0} />
                 )}
@@ -109,7 +110,7 @@ export function GenericSlider<T extends AllowedCard>({
       className={`relative w-full flex flex-col justify-center items-center ${heightClass || ''}`}
       data-lenis-prevent-touch
     >
-      <div className={`w-full max-w-full px-0 sm:px-6 lg:px-0 ${!isReview ? 'lg:max-w-[1440px]' : ''}`}>
+      <div className={sliderShellClass}>
         <Swiper
           modules={[Pagination, Autoplay]}
           spaceBetween={isHover ? 16 : 20}
@@ -145,12 +146,12 @@ export function GenericSlider<T extends AllowedCard>({
               spaceBetween: isHover ? 18 : 24,
             },
           }}
-          className={isHover ? '!pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
+          className={isHover ? 'services-carousel-swiper !pb-8 sm:!pb-10' : '!pb-12 sm:!pb-16'}
         >
           {data.map((item, index) => (
             <SwiperSlide
               key={index}
-              className={isHover ? "!flex !w-[86vw] !max-w-[360px] !justify-center sm:!w-[280px] sm:!max-w-none md:!w-[245px] lg:!w-[220px] xl:!w-[230px] 2xl:!w-[245px]" : "!flex !justify-center"}
+              className={isHover ? "!flex !w-[86vw] !max-w-[360px] !justify-center sm:!w-[280px] sm:!max-w-none md:!w-[245px] lg:!w-[225px] xl:!w-[238px] 2xl:!w-[250px]" : "!flex !justify-center"}
             >
               <motion.div
                 className="flex w-full justify-center"

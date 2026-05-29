@@ -51,29 +51,29 @@ export default function HomePortfolio({ initialProjects = [] }: { initialProject
 
   if (loading) {
     return (
-      <div className="flex w-full max-w-[980px] flex-col gap-8">
+      <div className="flex w-full max-w-none flex-col gap-8">
         {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="h-[260px] animate-pulse rounded-[22px] bg-[#F2F4F7] sm:h-[360px]" />
+          <div key={index} className="h-[clamp(240px,42vw,560px)] animate-pulse rounded-[22px] bg-[#F2F4F7]" />
         ))}
       </div>
     );
   }
 
   if (projects.length === 0) {
-    return <div className="w-full max-w-[980px] rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Portfolio projects will appear here soon.</div>;
+    return <div className="w-full max-w-none rounded-[28px] bg-[#F2F4F7] p-8 text-center text-[#667085]">Portfolio projects will appear here soon.</div>;
   }
 
   const visibleProjects = projects.slice(0, 6);
 
   return (
-    <div className="flex w-full max-w-[1050px] flex-col gap-7 sm:gap-8">
+    <div className="flex w-full max-w-none flex-col gap-7 sm:gap-8">
       {visibleProjects.map((project, index) => {
         const isLast = index === visibleProjects.length - 1;
         return (
           <div key={project.slug} className="relative">
             <Link
               href={`/portfolio/${project.slug}?from=projects`}
-              className="group block overflow-hidden rounded-[22px] bg-[#171717] shadow-md"
+              className="group block w-full overflow-hidden rounded-[22px] bg-[#171717] shadow-md"
               onClick={() => {
                 if (window.location.pathname === "/") {
                   window.history.replaceState(null, "", "/#projects");
@@ -84,7 +84,7 @@ export default function HomePortfolio({ initialProjects = [] }: { initialProject
                 <img
                   src={normalizeImageUrl(project.mainImageUrl)}
                   alt={project.title}
-                  className="h-[250px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015] sm:h-[340px] md:h-[390px] lg:h-[460px] xl:h-[500px]"
+                  className="h-[clamp(240px,42vw,560px)] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
                   loading={index === 0 ? "eager" : "lazy"}
                   fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
