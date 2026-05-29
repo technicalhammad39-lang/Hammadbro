@@ -47,7 +47,7 @@ export default function ExperienceSection({ initialItems = [] }: { initialItems?
 
   return (
     <section className="relative isolate w-full min-h-0 flex flex-col items-start mx-auto overflow-hidden px-5 sm:px-6 lg:px-[71px] py-8 sm:py-10 lg:py-14">
-      <div className="experience-side-element pointer-events-none absolute right-[-64px] top-[52%] z-0 hidden h-[580px] w-[230px] -translate-y-1/2 lg:block xl:right-[-54px] xl:h-[635px] xl:w-[248px] 2xl:right-[-44px] 2xl:h-[690px] 2xl:w-[270px]" aria-hidden="true">
+      <div className="experience-side-element pointer-events-none absolute right-[-82px] top-[52%] z-0 hidden h-[660px] w-[262px] -translate-y-1/2 lg:block xl:right-[-70px] xl:h-[720px] xl:w-[282px] 2xl:right-[-58px] 2xl:h-[780px] 2xl:w-[306px]" aria-hidden="true">
         <Image
           src="/side1.png"
           alt=""
