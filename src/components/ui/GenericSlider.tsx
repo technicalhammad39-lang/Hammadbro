@@ -58,7 +58,7 @@ export function GenericSlider<T extends AllowedCard>({
         <div className={sliderShellClass}>
           <div className="flex gap-4 overflow-hidden">
             {data.slice(0, isHover ? 6 : 3).map((item, index) => (
-              <div key={index} className={isHover ? "flex-shrink-0 w-[86vw] max-w-[360px] sm:w-[280px] sm:max-w-none md:w-[245px] lg:w-[225px] xl:w-[238px] 2xl:w-[250px]" : "flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm"}>
+              <div key={index} className={isHover ? "flex-shrink-0 w-[86vw] max-w-[360px] sm:w-[280px] sm:max-w-none md:w-[245px]" : "flex-shrink-0 w-full max-w-[calc(100vw-40px)] sm:max-w-sm"}>
                 {cardType === 'hover' && 'title' in item && 'imageSrc' in item && 'desc' in item && 'icon' in item && (
                   <ServicesCard title={item.title} imageSrc={item.imageSrc} desc={item.desc} icon={item.icon} priority={index === 0} />
                 )}
@@ -138,11 +138,19 @@ export function GenericSlider<T extends AllowedCard>({
               spaceBetween: isHover ? 16 : 20,
             },
             1024: {
-              slidesPerView: isHover ? 'auto' : isPortfolio ? 2 : isReview ? 2 : Math.min(slidesPerView, 3),
+              slidesPerView: isHover ? 3 : isPortfolio ? 2 : isReview ? 2 : Math.min(slidesPerView, 3),
               spaceBetween: isHover ? 16 : 24,
             },
             1280: {
-              slidesPerView: isHover ? 'auto' : isPortfolio ? 2 : isReview ? 2 : slidesPerView,
+              slidesPerView: isHover ? 4 : isPortfolio ? 2 : isReview ? 2 : slidesPerView,
+              spaceBetween: isHover ? 18 : 24,
+            },
+            1536: {
+              slidesPerView: isHover ? 5 : isPortfolio ? 2 : isReview ? 2 : slidesPerView,
+              spaceBetween: isHover ? 18 : 24,
+            },
+            1800: {
+              slidesPerView: isHover ? 6 : isPortfolio ? 2 : isReview ? 2 : slidesPerView,
               spaceBetween: isHover ? 18 : 24,
             },
           }}
@@ -151,14 +159,14 @@ export function GenericSlider<T extends AllowedCard>({
           {data.map((item, index) => (
             <SwiperSlide
               key={index}
-              className={isHover ? "!flex !w-[86vw] !max-w-[360px] !justify-center sm:!w-[280px] sm:!max-w-none md:!w-[245px] lg:!w-[225px] xl:!w-[238px] 2xl:!w-[250px]" : "!flex !justify-center"}
+              className={isHover ? "!flex w-[86vw] max-w-[360px] !justify-center sm:w-[280px] sm:max-w-none md:w-[245px]" : "!flex !justify-center"}
             >
               <motion.div
                 className="flex w-full justify-center"
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.55, delay: Math.min(index, 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                initial={isHover ? false : { opacity: 0, y: 22 }}
+                whileInView={isHover ? undefined : { opacity: 1, y: 0 }}
+                viewport={isHover ? undefined : { once: true, amount: 0.2 }}
+                transition={isHover ? undefined : { duration: 0.55, delay: Math.min(index, 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
               >
                 {cardType === 'hover' && 'title' in item && 'imageSrc' in item && 'desc' in item && 'icon' in item && (
                   <ServicesCard title={item.title} imageSrc={item.imageSrc} desc={item.desc} icon={item.icon} priority={index === 0} />

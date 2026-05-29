@@ -415,7 +415,7 @@ export default async function Home() {
             />
             <div className="flex items-start justify-start gap-4 flex-wrap">
               <CustomeText
-                title="my"
+                title="My"
                 className="font-semibold text-[32px] sm:text-[44px] lg:text-[64px] leading-tight text-[#344054]"
               />
               <CustomeText

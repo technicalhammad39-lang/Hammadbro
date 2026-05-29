@@ -342,18 +342,6 @@ select {
   transition: all 0.3s ease-in-out !important;
 }
 
-.services-carousel-swiper .swiper-wrapper {
-  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
-}
-
-@media (max-width: 640px) {
-  .services-carousel-swiper .swiper-wrapper {
-    mask-image: linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
-  }
-}
-
 .premium-cta {
   position: relative;
   isolation: isolate;
